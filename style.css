@@ -107,7 +107,7 @@ section {
 
 #galeria h2 {
     background-color: #D1C4B9 !important;
-    margin-bottom: 2rem; /* Adjusted margin */
+    margin-bottom: 2rem;
 }
 
 .mural-grid {
@@ -150,7 +150,7 @@ section {
 }
 
 #galleryModal #galleryModalImage {
-    max-height: 85vh; /* Aumentado um pouco para aproveitar o espaço */
+    max-height: 85vh;
     width: auto;
     margin: auto;
     display: block;

@@ -111,7 +111,6 @@ if (priceModal) {
     });
 }
 
-// Gallery Modal Logic
 const galleryModal = document.getElementById('galleryModal');
 if (galleryModal) {
     const galleryModalImage = document.getElementById('galleryModalImage');
