@@ -1,3 +1,26 @@
+document.addEventListener('DOMContentLoaded', function () {
+    const header = document.querySelector('.navbar');
+    let lastScrollTop = 0;
+
+    window.addEventListener('scroll', function() {
+        let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+        if (scrollTop > lastScrollTop) {
+            header.classList.add('navbar-hidden');
+        } else if (scrollTop === 0) {
+            header.classList.remove('navbar-hidden');
+        }
+
+        lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+
+        if (scrollTop > 50) {
+            header.classList.add('navbar-scrolled');
+        } else {
+            header.classList.remove('navbar-scrolled');
+        }
+    });
+});
+
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
