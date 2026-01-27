@@ -1,3 +1,86 @@
+const serviceSpecifications = {
+    'Sobrancelha': 'Serviços especializados de design e tratamento de sobrancelhas com técnicas modernas e profissional experiente. Oferecemos desde design clássico até técnicas avançadas.',
+    'Cabeleireiro': 'Cortes realizados por profissional especializado. Oferecemos coloração, escova progressiva, botox capilar e muito mais.',
+    'Micropigmentação': 'Técnica avançada de micropigmentação para sobrancelhas, olhos e lábios. Resultados naturais e duradouros com profissional altamente qualificada.',
+    'Estética Corporal': 'Tratamentos corporais completos incluindo drenagem linfática, ultracavitação, radiofrequência e massagens relaxantes para revitalizar seu corpo.',
+    'Manicure': 'Esmaltação tradicional, cuidados com as cutículas e spa dos pés em ambiente higienizado.',
+    'Depilação': 'Depilação com técnicas seguras e eficazes utilizando cera de mel e algas, de qualidade premium. Atendimento atencioso em ambiente limpo e aconchegante.',
+    'Estética Facial': 'Tratamentos faciais personalizados para limpeza profunda, hidratação, rejuvenescimento e microagulhamento com equipamentos de última geração.',
+    'Cílios': 'Serviços de lash lifting, tintura, cílios postiços e maquiagem profissional para realçar o olhar de forma natural e elegante.'
+};
+
+const professionals = {
+    'Sobrancelha': {
+        nome: 'Graziela',
+        foto: 'grazi/gra.jpg',
+        descricao: 'Especialista em design de sobrancelhas com mais de 20 anos de experiência. Criadora do salão com visão artística única.'
+    },
+    'Cabeleireiro': {
+        nome: 'Carlos',
+        foto: 'grazi/gra.jpg',
+        descricao: 'Cabeleireiro experiente com especialização em cortes, coloração e tratamentos capilares. Profissional dedicado com excelente reputação.'
+    },
+    'Micropigmentação': {
+        nome: 'Graziela',
+        foto: 'grazi/gra.jpg',
+        descricao: 'Profissional altamente qualificado em técnicas avançadas de micropigmentação com resultados naturais e duradouros.'
+    },
+    'Estética Corporal': {
+        nome: 'Vanessa',
+        foto: 'grazi/gra.jpg',
+        descricao: 'Esteticista especializada em tratamentos corporais. Profissional experiente e dedicada ao bem-estar das clientes.'
+    },
+    'Manicure': [
+        {
+            nome: 'Jaque',
+            foto: 'grazi/gra.jpg',
+            descricao: 'Manicure experiente com especialização em design de unhas. Profissional criativa com excelente atenção aos detalhes.'
+        },
+        {
+            nome: 'Eliana',
+            foto: 'grazi/gra.jpg',
+            descricao: 'Especialista em cuidados com pés e mãos. Profissional dedicada ao conforto e satisfação das clientes.'
+        },
+        {
+            nome: 'Fran',
+            foto: 'grazi/gra.jpg',
+            descricao: 'Manicure com experiência em gel e acrílico. Profissional atenciosa que oferece acabamento impecável em todos os serviços.'
+        },
+        {
+            nome: 'Bete',
+            foto: 'grazi/gra.jpg',
+            descricao: 'Especialista em nail art e designs personalizados. Profissional criativa com visão artística apurada.'
+        },
+        {
+            nome: 'Claudia',
+            foto: 'grazi/gra.jpg',
+            descricao: 'Manicure experiente com foco em hidratação e cuidados preventivos. Profissional dedicada à saúde das unhas.'
+        }
+    ],
+    'Depilação': [
+        {
+            nome: 'Silvia',
+            foto: 'grazi/gra.jpg',
+            descricao: 'Depiladora experiente com especialização em depilação de cera. Profissional atenciosa com excelentes técnicas.'
+        },
+        {
+            nome: 'Nair',
+            foto: 'grazi/gra.jpg',
+            descricao: 'Depiladora com técnica refinada e atendimento acolhedor. Especializada em cuidados com a pele e depilação sem irritação.'
+        }
+    ],
+    'Estética Facial': {
+        nome: 'Vanessa',
+        foto: 'grazi/gra.jpg',
+        descricao: 'Profissional especializada em tratamentos faciais personalizados com equipamentos de última geração.'
+    },
+    'Cílios': {
+        nome: 'Graziela',
+        foto: 'grazi/gra.jpg',
+        descricao: 'Profissional experiente em serviços de lash lifting, tintura e aplicação de cílios postiços com resultados naturais.'
+    }
+};
+
 document.addEventListener('DOMContentLoaded', function () {
     const header = document.querySelector('.navbar');
     let lastScrollTop = 0;
@@ -19,6 +102,172 @@ document.addEventListener('DOMContentLoaded', function () {
             header.classList.remove('navbar-scrolled');
         }
     });
+
+    const searchInput = document.getElementById('searchInput');
+    const searchResults = document.getElementById('searchResults');
+
+    if (searchInput) {
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase().trim();
+            
+            if (searchTerm === '') {
+                searchResults.classList.remove('show');
+                return;
+            }
+
+            const services = ['Sobrancelha', 'Cabeleireiro', 'Micropigmentação', 'Estética Corporal', 'Manicure', 'Depilação', 'Estética Facial', 'Cílios'];
+            const results = [];
+
+            services.forEach(service => {
+                if (service.toLowerCase().includes(searchTerm)) {
+                    results.push({
+                        name: service,
+                        type: 'Serviço'
+                    });
+                }
+            });
+
+            Object.keys(professionals).forEach(serviceKey => {
+                const professional = professionals[serviceKey];
+                if (Array.isArray(professional)) {
+                    professional.forEach(prof => {
+                        if (prof.nome.toLowerCase().includes(searchTerm)) {
+                            results.push({
+                                name: prof.nome,
+                                type: 'Profissional',
+                                service: serviceKey
+                            });
+                        }
+                    });
+                } else if (professional.nome && professional.nome.toLowerCase().includes(searchTerm)) {
+                    results.push({
+                        name: professional.nome,
+                        type: 'Profissional',
+                        service: serviceKey
+                    });
+                }
+            });
+
+            if (results.length > 0) {
+                searchResults.innerHTML = results.map(result => `
+                    <div class="search-result-item" data-service="${result.service || result.name}">
+                        <div class="search-result-title">${result.name}</div>
+                        <div class="search-result-type">${result.type}</div>
+                    </div>
+                `).join('');
+                searchResults.classList.add('show');
+
+                attachSearchResultHandlers();
+            } else {
+                searchResults.innerHTML = '<div class="search-result-item" style="text-align: center; color: #B59B85;">Nenhum resultado encontrado</div>';
+                searchResults.classList.add('show');
+            }
+        });
+
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                const searchTerm = this.value.toLowerCase().trim();
+                if (searchTerm === '') return;
+
+                const services = ['Sobrancelha', 'Cabeleireiro', 'Micropigmentação', 'Estética Corporal', 'Manicure', 'Depilação', 'Estética Facial', 'Cílios'];
+                
+                let serviceName = services.find(s => s.toLowerCase() === searchTerm);
+                
+                if (!serviceName) {
+                    for (const serviceKey in professionals) {
+                        const prof = professionals[serviceKey];
+                        if (Array.isArray(prof)) {
+                            const found = prof.find(p => p.nome.toLowerCase() === searchTerm);
+                            if (found) {
+                                serviceName = serviceKey;
+                                break;
+                            }
+                        } else if (prof.nome && prof.nome.toLowerCase() === searchTerm) {
+                            serviceName = serviceKey;
+                            break;
+                        }
+                    }
+                }
+
+                if (serviceName) {
+                    openServiceModal(serviceName);
+                    searchInput.value = '';
+                    searchResults.classList.remove('show');
+                }
+            }
+        });
+
+        document.addEventListener('click', function(event) {
+            if (!event.target.closest('.search-bar-container')) {
+                searchResults.classList.remove('show');
+            }
+        });
+    }
+
+    function attachSearchResultHandlers() {
+        searchResults.querySelectorAll('.search-result-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const serviceName = this.getAttribute('data-service');
+                searchInput.value = '';
+                searchResults.classList.remove('show');
+                openServiceModal(serviceName);
+            });
+        });
+    }
+
+    function openServiceModal(serviceName) {
+        const specification = serviceSpecifications[serviceName] || 'Serviço não encontrado';
+        const professional = professionals[serviceName];
+        const modalTitle = serviceModal.querySelector('.modal-title');
+        const modalBody = document.getElementById('serviceModalBody');
+
+        modalTitle.textContent = serviceName;
+
+        let html = '<div class="service-details">';
+        
+        if (Array.isArray(professional)) {
+            html += '<div class="professionals-section mb-4">';
+            html += '<h6 class="text-muted mb-3">Responsáveis pelo Serviço</h6>';
+            professional.forEach((prof, index) => {
+                html += '<div class="professional-card mb-3">';
+                html += '<div class="row align-items-center">';
+                html += '<div class="col-md-4 text-center">';
+                html += '<img src="' + prof.foto + '" alt="' + prof.nome + '" class="professional-img img-fluid rounded-circle" style="width: 150px; height: 150px; object-fit: cover; border: 3px solid #B59B85;">';
+                html += '</div>';
+                html += '<div class="col-md-8">';
+                html += '<h5 class="mb-2">' + prof.nome + '</h5>';
+                html += '<p class="text-muted">' + prof.descricao + '</p>';
+                html += '</div>';
+                html += '</div>';
+                if (index < professional.length - 1) {
+                    html += '<hr class="my-3">';
+                }
+                html += '</div>';
+            });
+            html += '</div>';
+        } else if (professional && professional.nome) {
+            html += '<div class="professional-section mb-4">';
+            html += '<div class="row align-items-center">';
+            html += '<div class="col-md-4 text-center">';
+            html += '<img src="' + professional.foto + '" alt="' + professional.nome + '" class="professional-img img-fluid rounded-circle" style="width: 150px; height: 150px; object-fit: cover; border: 3px solid #B59B85;">';
+            html += '</div>';
+            html += '<div class="col-md-8">';
+            html += '<h6 class="text-muted">Responsável pelo Serviço</h6>';
+            html += '<h5 class="mb-2">' + professional.nome + '</h5>';
+            html += '<p class="text-muted">' + professional.descricao + '</p>';
+            html += '</div>';
+            html += '</div>';
+            html += '</div>';
+        }
+        
+        html += '<hr>';
+        html += '<p class="lead mb-4">' + specification + '</p>';
+        html += '</div>';
+        
+        modalBody.innerHTML = html;
+        const bsModal = new bootstrap.Modal(serviceModal);
+        bsModal.show();
+    }
 });
 
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -31,106 +280,66 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-const priceData = {
-    'Sobrancelha': {
-        'Design de Sobrancelha': 'R$ 50,00',
-        'Tintura e Henna Sobrancelha': 'R$ 35,00',
-        'Brow Lamination': 'R$ 120,00',
-        'Forte Brow': 'R$ 150,00',
-        'Hidratação Labial': 'R$ 150,00'
-    },
-    'Cabeleireiro': {
-        'Corte Feminino': 'R$ 130,00',
-        'Corte Masculino': 'R$ 110,00',
-        'Corte Masculino com Máquina': 'R$ 50,00',
-        'Corte Infantil': 'R$ 110,00',
-        'Escova': 'R$ 85,00',
-        'Escova MegaHair': 'R$ 110,00',
-        'Luzes': 'R$ 250,00',
-        'Luzes Disfarce': 'R$ 180,00',
-        'Coloração': 'R$ 190,00',
-        'Escova Progressiva': 'R$ 400,00',
-        'Botox': 'R$ 250,00',
-        'Hidratação': 'R$ 120,00',
-        'Reconstrução': 'R$ 150,00',
-        'Penteado': 'R$ 250,00'
-    },
-    'Micropigmentação': {
-        'Fio a Fio Shadow': 'R$ 850,00',
-        'Olhos': 'R$ 500,00',
-        'Labial': 'R$ 999,00',
-        'Despigmentação': 'R$ 250,00'
-    },
-    'Estética Corporal': {
-        'Drenagem Linfática Manual': 'R$ 120,00',
-        'Drenagem Linfática M. Pós Cirúrgia': 'R$ 120,00',
-        'Modeledrene': 'R$ 120,00',
-        'Massagem Relaxante': 'R$ 120,00',
-        'Ultracavitação': 'R$ 120,00',
-        'Endermologia': 'R$ 120,00',
-        'Rádio Frequência (2 áreas)': 'R$ 190,00',
-        'Thermo Derm': 'R$ 100,00',
-        'Ultra Som': 'R$ 100,00',
-        'Esfoliação Corporal': 'R$ 120,00',
-        'Banho de Lua Corpo Todo': 'R$ 190,00'
-    },
-    'Manicure': {
-        'Mão': 'R$ 35,00',
-        'Pé': 'R$ 35,00',
-        'Pé + Spa dos Pés': 'R$ 90,00',
-        'Só Pintar': 'R$ 25,00',
-        'francezinha': 'R$ 4,00 (adicional)'
-    },
-    'Depilação': {
-        'Meia Perna + Virilha + Axila': 'R$ 85,00 (Ganhe Buço)',
-        'Perna Inteira + Virilha + Axila': 'R$ 109,00 (Ganhe Buço)',
-        'Virilha + Íntimo': 'R$ 68,00',
-        'Virilha + Íntimo + Axila': 'R$ 90,00',
-        'Buço de Cera': 'R$ 15,00',
-        'Buço de linha': 'R$ 22,00'
-    },
-    'Estética Facial': {
-        'Limpeza de Pele': 'R$ 150,00',
-        'Limpeza de Pele Acne': 'R$ 190,00',
-        'Hidratação': 'R$ 100,00',
-        'Peeling de Cristal': 'R$ 120,00',
-        'Fototerapia': 'R$ 100,00',
-        'Rejuvenescimento': 'R$ 165,00',
-        'Microagulhamento': 'R$ 260,00',
-        'Drenagem Linfática Manual': 'R$ 100,00',
-    },
-    'Cílios': {
-        'Lash Lifting': 'R$ 150,00',
-        'Tintura dos Cílios': 'R$ 40,00',
-        'Cílios Postiço': 'R$ 45,00',
-        'Maquiagem': 'R$ 150,00',
-    }
-};
-
-const priceModal = document.getElementById('priceModal');
-if (priceModal) {
-    priceModal.addEventListener('show.bs.modal', function (event) {
+const serviceModal = document.getElementById('serviceModal');
+if (serviceModal) {
+    serviceModal.addEventListener('show.bs.modal', function (event) {
         const button = event.relatedTarget;
-        const serviceName = button.getAttribute('data-service');
+        let serviceName = button.getAttribute('data-service');
         
-        const modalTitle = priceModal.querySelector('.modal-title');
-        const modalBody = priceModal.querySelector('.modal-body');
-
-        modalTitle.textContent = 'Tabela de Preços - ' + serviceName;
-
-        const tableData = priceData[serviceName] || { 'Serviço não encontrado': '' };
-        
-        let tableHtml = '<table class="table table-striped">';
-        tableHtml += '<thead><tr><th>Serviço</th><th>Preço</th></tr></thead>';
-        tableHtml += '<tbody>';
-
-        for (const item in tableData) {
-            tableHtml += `<tr><td>${item}</td><td>${tableData[item]}</td></tr>`;
+        if (!serviceName && button.parentElement) {
+            serviceName = button.parentElement.getAttribute('data-service');
         }
+        
+        const modalTitle = serviceModal.querySelector('.modal-title');
+        const modalBody = document.getElementById('serviceModalBody');
 
-        tableHtml += '</tbody></table>';
+        modalTitle.textContent = serviceName;
 
-        modalBody.innerHTML = tableHtml;
+        const specification = serviceSpecifications[serviceName] || 'Serviço não encontrado';
+        const professional = professionals[serviceName];
+        
+        let html = '<div class="service-details">';
+        
+        if (Array.isArray(professional)) {
+            html += '<div class="professionals-section mb-4">';
+            html += '<h6 class="text-muted mb-3">Responsáveis pelo Serviço</h6>';
+            professional.forEach((prof, index) => {
+                html += '<div class="professional-card mb-3">';
+                html += '<div class="row align-items-center">';
+                html += '<div class="col-md-4 text-center">';
+                html += '<img src="' + prof.foto + '" alt="' + prof.nome + '" class="professional-img img-fluid rounded-circle" style="width: 150px; height: 150px; object-fit: cover; border: 3px solid #B59B85;">';
+                html += '</div>';
+                html += '<div class="col-md-8">';
+                html += '<h5 class="mb-2">' + prof.nome + '</h5>';
+                html += '<p class="text-muted">' + prof.descricao + '</p>';
+                html += '</div>';
+                html += '</div>';
+                if (index < professional.length - 1) {
+                    html += '<hr class="my-3">';
+                }
+                html += '</div>';
+            });
+            html += '</div>';
+        } else if (professional && professional.nome) {
+            html += '<div class="professional-section mb-4">';
+            html += '<div class="row align-items-center">';
+            html += '<div class="col-md-4 text-center">';
+            html += '<img src="' + professional.foto + '" alt="' + professional.nome + '" class="professional-img img-fluid rounded-circle" style="width: 150px; height: 150px; object-fit: cover; border: 3px solid #B59B85;">';
+            html += '</div>';
+            html += '<div class="col-md-8">';
+            html += '<h6 class="text-muted">Responsável pelo Serviço</h6>';
+            html += '<h5 class="mb-2">' + professional.nome + '</h5>';
+            html += '<p class="text-muted">' + professional.descricao + '</p>';
+            html += '</div>';
+            html += '</div>';
+            html += '</div>';
+        }
+        
+        html += '<hr>';
+        html += '<p class="lead mb-4">' + specification + '</p>';
+        
+        html += '</div>';
+        modalBody.innerHTML = html;
     });
 }
 
@@ -149,3 +358,8 @@ if (galleryModal) {
         });
     }
 }
+AOS.init({
+    duration: 1000,
+    once: true,
+    offset: 50
+});

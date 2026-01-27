@@ -18,7 +18,7 @@ section {
 .navbar {
     background-color: transparent !important;
     box-shadow: none;
-    min-height: 120px;
+    min-height: 160px;
     transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
 
@@ -42,6 +42,21 @@ section {
     color: #B59B85;
 }
 
+.navbar-brand {
+    overflow: hidden;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.navbar-brand img {
+    height: 120px;
+    width: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #B59B85;
+}
 
 #inicio {
     background-image: url('grazi/gra.jpg');
@@ -92,8 +107,15 @@ section {
     box-shadow: 0 8px 15px rgba(74, 68, 63, 0.1);
 }
 
+.service-img {
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px 8px 0 0;
+}
+
 .service-card {
     cursor: pointer;
+    transition: all 0.3s ease;
 }
 
 .bg-light {
@@ -290,4 +312,181 @@ footer a {
 
 footer a:hover {
     text-decoration: underline;
+}
+
+.map-container {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(74, 68, 63, 0.1);
+}
+html, body {
+    overflow-x: hidden;
+}
+
+.feedbacks-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.feedback-card {
+    background-color: #FFFFFF;
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: 0 4px 8px rgba(74, 68, 63, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    border-left: 4px solid #B59B85;
+}
+
+.feedback-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(74, 68, 63, 0.2);
+}
+
+.feedback-header {
+    margin-bottom: 1.5rem;
+}
+
+.stars {
+    color: #FFD700;
+    font-size: 1.2rem;
+}
+
+.stars i {
+    margin-right: 0.3rem;
+}
+
+.feedback-text {
+    color: #4A443F;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    font-style: italic;
+}
+
+.feedback-author {
+    color: #B59B85;
+    font-weight: 600;
+    margin-bottom: 0;
+}
+
+/* Search Bar with Dropdown Styles */
+.search-bar-container {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    align-items: center;
+}
+
+.search-bar-container .search-input {
+    border: 2px solid #B59B85;
+    border-radius: 25px 0 0 25px;
+    padding: 0.75rem 1.25rem;
+    font-size: 1rem;
+    color: #4A443F;
+    flex: 1;
+}
+
+.search-bar-container .search-input:focus {
+    outline: none;
+    border-color: #A08771;
+    box-shadow: 0 0 0 0.2rem rgba(181, 155, 133, 0.25);
+}
+
+.search-bar-container .search-input::placeholder {
+    color: #B59B85;
+}
+
+.search-bar-container .input-group-append {
+    display: contents;
+}
+
+.search-bar-container .dropdown-toggle {
+    border: 2px solid #B59B85;
+    border-left: none;
+    border-radius: 0 25px 25px 0;
+    color: #4A443F;
+    font-weight: 500;
+    padding: 0.75rem 1.25rem;
+    font-size: 1rem;
+    white-space: nowrap;
+}
+
+.search-bar-container .dropdown-toggle:hover {
+    background-color: #B59B85;
+    border-color: #B59B85;
+    color: #FFFFFF;
+}
+
+.search-bar-container .dropdown-toggle::after {
+    margin-left: 0.5rem;
+}
+
+.search-bar-container .dropdown-menu {
+    border: 2px solid #B59B85;
+    border-radius: 8px;
+    padding: 0.5rem 0;
+}
+
+.search-bar-container .dropdown-item {
+    padding: 0.75rem 1.25rem;
+    font-size: 1rem;
+    color: #4A443F;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.search-bar-container .dropdown-item:hover {
+    background-color: #E8E1DA;
+    color: #B59B85;
+}
+
+.search-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 300px;
+    background-color: #FFFFFF;
+    border: 2px solid #B59B85;
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0 4px 12px rgba(74, 68, 63, 0.15);
+    margin-top: 0;
+    max-height: 400px;
+    overflow-y: auto;
+    display: none;
+    z-index: 1000;
+}
+
+.search-results.show {
+    display: block;
+}
+
+.search-result-item {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #E8E1DA;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.search-result-item:last-child {
+    border-bottom: none;
+}
+
+.search-result-item:hover {
+    background-color: #F5F0EB;
+}
+
+.search-result-title {
+    font-weight: 600;
+    color: #4A443F;
+    font-size: 0.95rem;
+}
+
+.search-result-type {
+    font-size: 0.8rem;
+    color: #B59B85;
+    margin-top: 0.2rem;
 }

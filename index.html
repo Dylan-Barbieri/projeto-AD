@@ -6,6 +6,7 @@
     <title>Grazi esthetic</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
@@ -21,18 +22,28 @@
 
     <header class="navbar navbar-expand-lg navbar-light fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="#"><img src="img/logo AD.jpg" alt="Logo Grazi esthetic" style="height: 60px;"></a>
+            <a class="navbar-brand" href="#"><img src="img/logo AD.jpg" alt="Logo Grazi esthetic"
+            data-aos="zoom-in"
+            style="height: 60px;"></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item"><a class="nav-link" href="#inicio">Início</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#servicos">Serviços</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#galeria">Galeria</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#sobre">Sobre Nós</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#contato">Contato</a></li>
-                </ul>
+                <div class="input-group search-bar-container">
+                    <input type="text" id="searchInput" class="form-control search-input" placeholder="Buscar serviço ou profissional..." aria-label="Buscar">
+                    <div id="searchResults" class="search-results"></div>
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Menu
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="#servicos">Serviços</a></li>
+                            <li><a class="dropdown-item" href="#galeria">Galeria</a></li>
+                            <li><a class="dropdown-item" href="#feedbacks">Avaliações</a></li>
+                            <li><a class="dropdown-item" href="#sobre">Sobre Nós</a></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </header>
@@ -42,7 +53,7 @@
             <div class="container">
                 <h1>Bem-vinda à Grazi Esthetic</h1>
                 <p class="lead">Onde sua beleza é a nossa inspiração.</p>
-                <a href="#contato" class="btn btn-primary btn-lg">Agende seu Horário</a>
+                <a href="https://wa.me/551150732011" target="_blank" class="btn btn-primary btn-lg">Agende seu Horário</a>
             </div>
         </section>
 
@@ -51,56 +62,64 @@
                 <h2 class="text-center mb-4">Nossos Serviços</h2>
                 <div class="row">
                     <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-                        <div class="card text-center h-100 service-card" data-bs-toggle="modal" data-bs-target="#priceModal" data-service="Sobrancelha">
+                        <div class="card text-center h-100 service-card" data-bs-toggle="modal" data-bs-target="#serviceModal" data-service="Sobrancelha">
+                            <img src="img/serviços/sobra.jpg" alt="Sobrancelha" class="card-img-top service-img">
                             <div class="card-body d-flex justify-content-center align-items-center">
                                 <h5 class="card-title mb-0">Sobrancelha</h5>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-                        <div class="card text-center h-100 service-card" data-bs-toggle="modal" data-bs-target="#priceModal" data-service="Cabeleireiro">
+                        <div class="card text-center h-100 service-card" data-bs-toggle="modal" data-bs-target="#serviceModal" data-service="Cabeleireiro">
+                            <img src="img/serviços/cabe.jpg" alt="Cabeleireiro" class="card-img-top service-img">
                             <div class="card-body d-flex justify-content-center align-items-center">
                                 <h5 class="card-title mb-0">Cabeleireiro</h5>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-                        <div class="card text-center h-100 service-card" data-bs-toggle="modal" data-bs-target="#priceModal" data-service="Micropigmentação">
+                        <div class="card text-center h-100 service-card" data-bs-toggle="modal" data-bs-target="#serviceModal" data-service="Micropigmentação">
+                            <img src="img/serviços/micro.jpg" alt="Micropigmentação" class="card-img-top service-img">
                             <div class="card-body d-flex justify-content-center align-items-center">
                                 <h5 class="card-title mb-0">Micropigmentação</h5>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-                        <div class="card text-center h-100 service-card" data-bs-toggle="modal" data-bs-target="#priceModal" data-service="Estética Corporal">
+                        <div class="card text-center h-100 service-card" data-bs-toggle="modal" data-bs-target="#serviceModal" data-service="Estética Corporal">
+                            <img src="img/serviços/corpo.jpg" alt="Estética Corporal" class="card-img-top service-img">
                             <div class="card-body d-flex justify-content-center align-items-center">
                                 <h5 class="card-title mb-0">Estética Corporal</h5>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-                        <div class="card text-center h-100 service-card" data-bs-toggle="modal" data-bs-target="#priceModal" data-service="Manicure">
+                        <div class="card text-center h-100 service-card" data-bs-toggle="modal" data-bs-target="#serviceModal" data-service="Manicure">
+                            <img src="img/serviços/unha.jpg" alt="Manicure" class="card-img-top service-img">
                             <div class="card-body d-flex justify-content-center align-items-center">
                                 <h5 class="card-title mb-0">Manicure</h5>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-                        <div class="card text-center h-100 service-card" data-bs-toggle="modal" data-bs-target="#priceModal" data-service="Depilação">
+                        <div class="card text-center h-100 service-card" data-bs-toggle="modal" data-bs-target="#serviceModal" data-service="Depilação">
+                            <img src="img/serviços/depi.jpg" alt="Depilação" class="card-img-top service-img">
                             <div class="card-body d-flex justify-content-center align-items-center">
                                 <h5 class="card-title mb-0">Depilação</h5>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-                        <div class="card text-center h-100 service-card" data-bs-toggle="modal" data-bs-target="#priceModal" data-service="Estética Facial">
+                        <div class="card text-center h-100 service-card" data-bs-toggle="modal" data-bs-target="#serviceModal" data-service="Estética Facial">
+                            <img src="img/serviços/faci.jpg" alt="Estética Facial" class="card-img-top service-img">
                             <div class="card-body d-flex justify-content-center align-items-center">
                                 <h5 class="card-title mb-0">Estética Facial</h5>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-                        <div class="card text-center h-100 service-card" data-bs-toggle="modal" data-bs-target="#priceModal" data-service="Cílios">
+                        <div class="card text-center h-100 service-card" data-bs-toggle="modal" data-bs-target="#serviceModal" data-service="Cílios">
+                            <img src="img/serviços/cili.jpg" alt="Cílios" class="card-img-top service-img">
                             <div class="card-body d-flex justify-content-center align-items-center">
                                 <h5 class="card-title mb-0">Cílios</h5>
                             </div>
@@ -114,22 +133,124 @@
             <div class="container">
                 <h2 class="text-center py-5">Galeria</h2>
                 <div class="mural-grid">
-                    <img src="img/serviços/2.jpg" alt="Foto da galeria 1">
-                    <img src="img/serviços/4.jpg" alt="Foto da galeria 2">
-                    <img src="img/serviços/3.jpg" alt="Foto da galeria 3">
-                    <img src="img/serviços/5.jpg" alt="Foto da galeria 4">
-                    <img src="img/serviços/6.jpg" alt="Foto da galeria 5">
-                    <img src="img/serviços/1.jpg" alt="Foto da galeria 6">
-                    <img src="img/serviços/8.jpg" alt="Foto da galeria 7">
-                    <img src="img/serviços/7.jpg" alt="Foto da galeria 8">
-                </div>
+                    <img src="img/galeria/sobran.jpg" alt="Foto da galeria 1" data-aos="fade-up">
+                    <img src="img/galeria/unha2.jpg" alt="Foto da galeria 2" data-aos="fade-up" data-aos-delay="100">
+                    <img src="img/galeria/cabe.jpg" alt="Foto da galeria 3" data-aos="fade-up" data-aos-delay="200">
+                    <img src="img/galeria/rosto2.jpg" alt="Foto da galeria 4" data-aos="fade-up">
+                    <img src="img/galeria/unha.jpg" alt="Foto da galeria 5" data-aos="fade-up" data-aos-delay="100">
+                    <img src="img/galeria/sobran2.jpg" alt="Foto da galeria 6" data-aos="fade-up" data-aos-delay="200">
+                    <img src="img/galeria/rosto.jpg" alt="Foto da galeria 7" data-aos="fade-up">
+                    <img src="img/galeria/cabe2.jpg" alt="Foto da galeria 8" data-aos="fade-up" data-aos-delay="100">
             </div>
-        </section>
+        </div>
+</section>
 
         <section id="sobre" class="py-5">
             <div class="container">
-                <h2 class="text-center mb-4">Duas décadas transformando belezas e histórias.</h2>
-                <p class="text-center lead">Com 23 anos de tradição, o nosso salão é mais do que um espaço de estética; é um lugar onde gerações de mulheres se encontram para renovar a autoestima. Fundado pela Graziela, o salão nasceu de um sonho e se consolidou no mercado através da dedicação e do aperfeiçoamento constante. Aqui, cada cliente é única e cada serviço é realizado com a experiência de quem realmente entende do assunto. Unimos a segurança da tradição com as tendências mais modernas do mundo da beleza.</p>
+                <h2 class="text-center mb-4" data-aos="fade-right">
+                Duas décadas transformando belezas e histórias.
+                </h2>
+                <p class="text-center lead" data-aos="fade-up" data-aos-delay="200">
+                Com 23 anos de tradição, o nosso salão é mais do que um espaço de estética; é um lugar onde gerações de mulheres se encontram para renovar a autoestima. Fundado pela Graziela, o salão nasceu de um sonho e se consolidou no mercado através da dedicação e do aperfeiçoamento constante. Aqui, cada cliente é única e cada serviço é realizado com a experiência de quem realmente entende do assunto. Unimos a segurança da tradição com as tendências mais modernas do mundo da beleza.
+                </p>
+        </div>
+</section>
+
+        <section id="feedbacks" class="py-5 bg-light">
+            <div class="container">
+                <h2 class="text-center mb-5">Avaliações de Clientes</h2>
+                <div class="feedbacks-grid">
+                    <div class="feedback-card" data-aos="fade-up">
+                        <div class="feedback-header">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <p class="feedback-text">"Salão otimo para qualquer serviço de beleza. Carlos é um excelente cabeleireiro, as manicures sao muito boas, a Grazi que cuida de nossas sobrancelhas é muito atenciosa, mas em especial, minha nota 5 vai para a Vanessa esteticista e para a Silvia depiladora."</p>
+                        <p class="feedback-author"><strong>Camila Santos</strong></p>
+                    </div>
+
+                    <div class="feedback-card" data-aos="fade-up" data-aos-delay="100">
+                        <div class="feedback-header">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <p class="feedback-text">"Frequento há 20 anos, muito bem atendida por todos os profissionais. A Grazi além de ser a melhor designer de sobrancelha de SP é uma excelente pessoa sempre com muito foco em deixar todas as clientes satisfeitas."</p>
+                        <p class="feedback-author"><strong>Melina Restituti</strong></p>
+                    </div>
+
+                    <div class="feedback-card" data-aos="fade-up" data-aos-delay="200">
+                        <div class="feedback-header">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <p class="feedback-text">"Carlos é excelente profissional, sério e competente. Faço meu cabelo com ele há mais de 10 anos: luzes, corte, hidratação, botox, progressiva. Orientações bastante claras e assertivas quanto a todos os tipos de tratamento."</p>
+                        <p class="feedback-author"><strong>Jane Carboni</strong></p>
+                    </div>
+
+                    <div class="feedback-card" data-aos="fade-up" data-aos-delay="300">
+                        <div class="feedback-header">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <p class="feedback-text">"super maravilhoso!
+                        Melhor depilação do mundo genteeee!
+                        Recomendo msm, exatamente 18 anos com a msm profissional.
+                        Estabelecimento fiel aos seus clientes.
+                        Sempre nos preservando.
+                        Donos completamente atentos as normas de higiene.
+                        Experimente!"</p>
+                        <p class="feedback-author"><strong>Livia Maria</strong></p>
+                    </div>
+
+                    <div class="feedback-card" data-aos="fade-up" data-aos-delay="400">
+                        <div class="feedback-header">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <p class="feedback-text">"Graziela Barbieri é a melhor design de sobrancelhas que eu conheço, sou cliente há mais de 24 anos! Todos os funcionários da Advanced Center são simpáticos e prestam excelente atendimento!"</p>
+                        <p class="feedback-author"><strong>Elaine Garutti</strong></p>
+                    </div>
+
+                    <div class="feedback-card" data-aos="fade-up" data-aos-delay="500">
+                        <div class="feedback-header">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <p class="feedback-text">"Sou cliente a 19 anos amo passar meu tempo lá.
+                        O Carlos faz um cabelo como ninguém excelente profissional, Graziela sombrancelha perfeita as manicures, esteticistas, Depiladoras nota 11"</p>
+                        <p class="feedback-author"><strong>Sonia Michel</strong></p>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -143,34 +264,46 @@
                         <h5>Telefone</h5>
                         <p>(11) 5073-2011</p>
                         <h5>Horário de Funcionamento</h5>
-                        <p>Terça a Sábado, das 9h às 19h</p>
+                        <ul class="list-unstyled">
+                            <li><strong>Segunda:</strong> Fechado</li>
+                            <li><strong>Terça:</strong> 9h às 19h</li>
+                            <li><strong>Quarta:</strong> 9h às 19h</li>
+                            <li><strong>Quinta:</strong> 9h às 19h</li>
+                            <li><strong>Sexta:</strong> 9h às 19h</li>
+                            <li><strong>Sábado:</strong> 8h às 18h</li>
+                            <li><strong>Domingo:</strong> Fechado</li>
+                        </ul>
                     </div>
                     <div class="col-md-6">
-                        <h5>Agende seu horário</h5>
-                        <form>
-                            <div class="mb-3"><input type="text" class="form-control" placeholder="Seu Nome"></div>
-                            <div class="mb-3"><input type="email" class="form-control" placeholder="Seu E-mail"></div>
-                            <div class="mb-3"><textarea class="form-control" rows="3" placeholder="Sua Mensagem"></textarea></div>
-                            <button type="submit" class="btn btn-primary">Enviar</button>
-                        </form>
+                        <h5>Localização</h5>
+                        <div class="map-container">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3656.0499999999997!2d-46.5659!3d-23.6247!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce53b1d7e8b8b1%3A0x5c0b3b5b5b5b5b5b!2sR.%20Ribeiro%20Lacerda%2C%20471%20-%20Jardim%20da%20Sa%C3%BAde%2C%20S%C3%A3o%20Paulo%20-%20SP%2C%2004150-000!5e0!3m2!1spt-BR!2sbr!4v1234567890" width="100%" height="300" style="border:0; border-radius: 8px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
+                        <p class="mt-3">
+                            <a href="https://www.google.com/maps/search/R.+Ribeiro+Lacerda,+471+-+Jardim+da+Sa%C3%BAde,+S%C3%A3o+Paulo+-+SP,+04150-000" target="_blank" class="btn btn-primary btn-sm">
+                                <i class="fas fa-map-marker-alt"></i> Abrir no Google Maps
+                            </a>
+                        </p>
                     </div>
                 </div>
             </div>
         </section>
     </main>
 
-    <div class="modal fade" id="priceModal" tabindex="-1" aria-labelledby="priceModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
+
+
+    <div class="modal fade" id="serviceModal" tabindex="-1" aria-labelledby="serviceModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="priceModalLabel">Tabela de Preços</h5>
+                    <h5 class="modal-title" id="serviceModalLabel">Especificações do Serviço</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    
+                <div class="modal-body" id="serviceModalBody">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <a href="https://wa.me/551150732011" class="btn btn-primary" target="_blank">Agendar via WhatsApp</a>
                 </div>
             </div>
         </div>
@@ -201,6 +334,7 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
