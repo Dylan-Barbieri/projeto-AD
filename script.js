@@ -83,6 +83,7 @@ const professionals = {
 
 document.addEventListener('DOMContentLoaded', function () {
     const header = document.querySelector('.navbar');
+    const serviceModal = document.getElementById('serviceModal');
     let lastScrollTop = 0;
 
     window.addEventListener('scroll', function() {
@@ -127,6 +128,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             });
 
+            if ('unha'.includes(searchTerm)) {
+                results.push({
+                    name: 'Manicure',
+                    type: 'Serviço'
+                });
+            }
+
             Object.keys(professionals).forEach(serviceKey => {
                 const professional = professionals[serviceKey];
                 if (Array.isArray(professional)) {
@@ -149,12 +157,15 @@ document.addEventListener('DOMContentLoaded', function () {
             });
 
             if (results.length > 0) {
-                searchResults.innerHTML = results.map(result => `
+                searchResults.innerHTML = results.map(result => {
+                    const displayName = result.name === 'Manicure' ? 'Unha' : result.name;
+                    return `
                     <div class="search-result-item" data-service="${result.service || result.name}">
-                        <div class="search-result-title">${result.name}</div>
+                        <div class="search-result-title">${displayName}</div>
                         <div class="search-result-type">${result.type}</div>
                     </div>
-                `).join('');
+                `;
+                }).join('');
                 searchResults.classList.add('show');
 
                 attachSearchResultHandlers();
@@ -172,6 +183,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 const services = ['Sobrancelha', 'Cabeleireiro', 'Micropigmentação', 'Estética Corporal', 'Manicure', 'Depilação', 'Estética Facial', 'Cílios'];
                 
                 let serviceName = services.find(s => s.toLowerCase() === searchTerm);
+                
+                // Se pesquisar "unha", redireciona para "Manicure"
+                if (!serviceName && searchTerm === 'unha') {
+                    serviceName = 'Manicure';
+                }
                 
                 if (!serviceName) {
                     for (const serviceKey in professionals) {
@@ -221,7 +237,8 @@ document.addEventListener('DOMContentLoaded', function () {
         const modalTitle = serviceModal.querySelector('.modal-title');
         const modalBody = document.getElementById('serviceModalBody');
 
-        modalTitle.textContent = serviceName;
+        const displayTitle = serviceName === 'Manicure' ? 'Manicure e pedicure' : serviceName;
+        modalTitle.textContent = displayTitle;
 
         let html = '<div class="service-details">';
         
@@ -293,7 +310,9 @@ if (serviceModal) {
         const modalTitle = serviceModal.querySelector('.modal-title');
         const modalBody = document.getElementById('serviceModalBody');
 
-        modalTitle.textContent = serviceName;
+        // Exibir "Manicure e pedicure" para o serviço de Manicure
+        const displayTitle = serviceName === 'Manicure' ? 'Manicure e pedicure' : serviceName;
+        modalTitle.textContent = displayTitle;
 
         const specification = serviceSpecifications[serviceName] || 'Serviço não encontrado';
         const professional = professionals[serviceName];
