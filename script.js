@@ -84,6 +84,7 @@ const professionals = {
 document.addEventListener('DOMContentLoaded', function () {
     const header = document.querySelector('.navbar');
     const serviceModal = document.getElementById('serviceModal');
+    const professionalModal = document.getElementById('professionalModal');
     let lastScrollTop = 0;
 
     window.addEventListener('scroll', function() {
@@ -117,42 +118,59 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             const services = ['Sobrancelha', 'Cabeleireiro', 'Micropigmentação', 'Estética Corporal', 'Manicure', 'Depilação', 'Estética Facial', 'Cílios'];
-            const results = [];
+            let results = [];
+            let uniqueResults = new Set();
 
             services.forEach(service => {
                 if (service.toLowerCase().includes(searchTerm)) {
-                    results.push({
-                        name: service,
-                        type: 'Serviço'
-                    });
+                    const resultKey = `service-${service}`;
+                    if (!uniqueResults.has(resultKey)) {
+                        results.push({
+                            name: service,
+                            type: 'Serviço'
+                        });
+                        uniqueResults.add(resultKey);
+                    }
                 }
             });
 
-            if ('unha'.includes(searchTerm)) {
-                results.push({
-                    name: 'Manicure',
-                    type: 'Serviço'
-                });
+            if ('unha'.toLowerCase().includes(searchTerm)) {
+                const resultKey = `service-Manicure`;
+                if (!uniqueResults.has(resultKey)) {
+                    results.push({
+                        name: 'Manicure',
+                        type: 'Serviço'
+                    });
+                    uniqueResults.add(resultKey);
+                }
             }
 
             Object.keys(professionals).forEach(serviceKey => {
-                const professional = professionals[serviceKey];
-                if (Array.isArray(professional)) {
-                    professional.forEach(prof => {
+                const professionalData = professionals[serviceKey];
+                if (Array.isArray(professionalData)) {
+                    professionalData.forEach(prof => {
                         if (prof.nome.toLowerCase().includes(searchTerm)) {
-                            results.push({
-                                name: prof.nome,
-                                type: 'Profissional',
-                                service: serviceKey
-                            });
+                            const resultKey = `prof-${prof.nome}`;
+                            if (!uniqueResults.has(resultKey)) {
+                                results.push({
+                                    name: prof.nome,
+                                    type: 'Profissional',
+                                    service: serviceKey
+                                });
+                                uniqueResults.add(resultKey);
+                            }
                         }
                     });
-                } else if (professional.nome && professional.nome.toLowerCase().includes(searchTerm)) {
-                    results.push({
-                        name: professional.nome,
-                        type: 'Profissional',
-                        service: serviceKey
-                    });
+                } else if (professionalData.nome && professionalData.nome.toLowerCase().includes(searchTerm)) {
+                    const resultKey = `prof-${professionalData.nome}`;
+                    if (!uniqueResults.has(resultKey)) {
+                        results.push({
+                            name: professionalData.nome,
+                            type: 'Profissional',
+                            service: serviceKey
+                        });
+                        uniqueResults.add(resultKey);
+                    }
                 }
             });
 
@@ -160,7 +178,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 searchResults.innerHTML = results.map(result => {
                     const displayName = result.name === 'Manicure' ? 'Unha' : result.name;
                     return `
-                    <div class="search-result-item" data-service="${result.service || result.name}">
+                    <div class="search-result-item" data-name="${result.name}" data-type="${result.type}" data-service="${result.service || result.name}">
                         <div class="search-result-title">${displayName}</div>
                         <div class="search-result-type">${result.type}</div>
                     </div>
@@ -180,29 +198,38 @@ document.addEventListener('DOMContentLoaded', function () {
                 const searchTerm = this.value.toLowerCase().trim();
                 if (searchTerm === '') return;
 
-                const services = ['Sobrancelha', 'Cabeleireiro', 'Micropigmentação', 'Estética Corporal', 'Manicure', 'Depilação', 'Estética Facial', 'Cílios'];
-                
-                let serviceName = services.find(s => s.toLowerCase() === searchTerm);
-                
-                // Se pesquisar "unha", redireciona para "Manicure"
-                if (!serviceName && searchTerm === 'unha') {
-                    serviceName = 'Manicure';
-                }
-                
-                if (!serviceName) {
-                    for (const serviceKey in professionals) {
-                        const prof = professionals[serviceKey];
-                        if (Array.isArray(prof)) {
-                            const found = prof.find(p => p.nome.toLowerCase() === searchTerm);
-                            if (found) {
-                                serviceName = serviceKey;
-                                break;
-                            }
-                        } else if (prof.nome && prof.nome.toLowerCase() === searchTerm) {
-                            serviceName = serviceKey;
+                // Verifica se o termo pesquisado corresponde a um profissional
+                let professionalName = null;
+                let professionalService = null;
+                for (const serviceKey in professionals) {
+                    const profData = professionals[serviceKey];
+                    if (Array.isArray(profData)) {
+                        const found = profData.find(p => p.nome.toLowerCase() === searchTerm);
+                        if (found) {
+                            professionalName = found.nome;
+                            professionalService = serviceKey;
                             break;
                         }
+                    } else if (profData.nome && profData.nome.toLowerCase() === searchTerm) {
+                        professionalName = profData.nome;
+                        professionalService = serviceKey;
+                        break;
                     }
+                }
+
+                if (professionalName) {
+                    openProfessionalModal(professionalName, professionalService);
+                    searchInput.value = '';
+                    searchResults.classList.remove('show');
+                    return;
+                }
+
+                // Se não for um profissional, verifica se é um serviço
+                const services = ['Sobrancelha', 'Cabeleireiro', 'Micropigmentação', 'Estética Corporal', 'Manicure', 'Depilação', 'Estética Facial', 'Cílios'];
+                let serviceName = services.find(s => s.toLowerCase() === searchTerm);
+                
+                if (!serviceName && searchTerm === 'unha') {
+                    serviceName = 'Manicure';
                 }
 
                 if (serviceName) {
@@ -223,10 +250,18 @@ document.addEventListener('DOMContentLoaded', function () {
     function attachSearchResultHandlers() {
         searchResults.querySelectorAll('.search-result-item').forEach(item => {
             item.addEventListener('click', function() {
+                const name = this.getAttribute('data-name');
+                const type = this.getAttribute('data-type');
                 const serviceName = this.getAttribute('data-service');
+                
                 searchInput.value = '';
                 searchResults.classList.remove('show');
-                openServiceModal(serviceName);
+
+                if (type === 'Profissional') {
+                    openProfessionalModal(name, serviceName);
+                } else {
+                    openServiceModal(name);
+                }
             });
         });
     }
@@ -249,11 +284,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 html += '<div class="professional-card mb-3">';
                 html += '<div class="row align-items-center">';
                 html += '<div class="col-md-4 text-center">';
-                html += '<img src="' + prof.foto + '" alt="' + prof.nome + '" class="professional-img img-fluid rounded-circle" style="width: 150px; height: 150px; object-fit: cover; border: 3px solid #B59B85;">';
+                html += `<img src="${prof.foto}" alt="${prof.nome}" class="professional-img img-fluid rounded-circle" style="width: 150px; height: 150px; object-fit: cover; border: 3px solid #B59B85;">`;
                 html += '</div>';
                 html += '<div class="col-md-8">';
-                html += '<h5 class="mb-2">' + prof.nome + '</h5>';
-                html += '<p class="text-muted">' + prof.descricao + '</p>';
+                html += `<h5 class="mb-2">${prof.nome}</h5>`;
+                html += `<p class="text-muted">${prof.descricao}</p>`;
                 html += '</div>';
                 html += '</div>';
                 if (index < professional.length - 1) {
@@ -266,23 +301,61 @@ document.addEventListener('DOMContentLoaded', function () {
             html += '<div class="professional-section mb-4">';
             html += '<div class="row align-items-center">';
             html += '<div class="col-md-4 text-center">';
-            html += '<img src="' + professional.foto + '" alt="' + professional.nome + '" class="professional-img img-fluid rounded-circle" style="width: 150px; height: 150px; object-fit: cover; border: 3px solid #B59B85;">';
+            html += `<img src="${professional.foto}" alt="${professional.nome}" class="professional-img img-fluid rounded-circle" style="width: 150px; height: 150px; object-fit: cover; border: 3px solid #B59B85;">`;
             html += '</div>';
             html += '<div class="col-md-8">';
             html += '<h6 class="text-muted">Responsável pelo Serviço</h6>';
-            html += '<h5 class="mb-2">' + professional.nome + '</h5>';
-            html += '<p class="text-muted">' + professional.descricao + '</p>';
+            html += `<h5 class="mb-2">${professional.nome}</h5>`;
+            html += `<p class="text-muted">${professional.descricao}</p>`;
             html += '</div>';
             html += '</div>';
             html += '</div>';
         }
         
         html += '<hr>';
-        html += '<p class="lead mb-4">' + specification + '</p>';
+        html += `<p class="lead mb-4">${specification}</p>`;
         html += '</div>';
         
         modalBody.innerHTML = html;
         const bsModal = new bootstrap.Modal(serviceModal);
+        bsModal.show();
+    }
+
+    function openProfessionalModal(professionalName, serviceName) {
+        const professionalData = professionals[serviceName];
+        let professional;
+
+        if (Array.isArray(professionalData)) {
+            professional = professionalData.find(p => p.nome === professionalName);
+        } else if (professionalData && professionalData.nome === professionalName) {
+            professional = professionalData;
+        }
+
+        if (!professional) {
+            console.error('Profissional não encontrado:', professionalName);
+            return;
+        }
+
+        const modalTitle = professionalModal.querySelector('.modal-title');
+        const modalBody = document.getElementById('professionalModalBody');
+
+        modalTitle.textContent = professional.nome;
+
+        let html = '<div class="professional-details">';
+        html += '<div class="row align-items-center">';
+        html += '<div class="col-md-4 text-center">';
+        html += `<img src="${professional.foto}" alt="${professional.nome}" class="professional-img img-fluid rounded-circle" style="width: 150px; height: 150px; object-fit: cover; border: 3px solid #B59B85;">`;
+        html += '</div>';
+        html += '<div class="col-md-8">';
+        html += `<h5 class="mb-2">${professional.nome}</h5>`;
+        html += `<p class="text-muted">${professional.descricao}</p>`;
+        html += `<p class="text-muted"><strong>Serviço:</strong> ${serviceName}</p>`;
+        html += '</div>';
+        html += '</div>';
+        html += '</div>';
+
+        modalBody.innerHTML = html;
+        const bsModal = new bootstrap.Modal(professionalModal);
         bsModal.show();
     }
 });
