@@ -18,7 +18,7 @@ section {
 .navbar {
     background-color: transparent !important;
     box-shadow: none;
-    min-height: 160px;
+    min-height: 100px;
     transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
 

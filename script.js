@@ -198,7 +198,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 const searchTerm = this.value.toLowerCase().trim();
                 if (searchTerm === '') return;
 
-                // Verifica se o termo pesquisado corresponde a um profissional
                 let professionalName = null;
                 let professionalService = null;
                 for (const serviceKey in professionals) {
@@ -224,7 +223,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     return;
                 }
 
-                // Se não for um profissional, verifica se é um serviço
                 const services = ['Sobrancelha', 'Cabeleireiro', 'Micropigmentação', 'Estética Corporal', 'Manicure', 'Depilação', 'Estética Facial', 'Cílios'];
                 let serviceName = services.find(s => s.toLowerCase() === searchTerm);
                 
@@ -383,7 +381,6 @@ if (serviceModal) {
         const modalTitle = serviceModal.querySelector('.modal-title');
         const modalBody = document.getElementById('serviceModalBody');
 
-        // Exibir "Manicure e pedicure" para o serviço de Manicure
         const displayTitle = serviceName === 'Manicure' ? 'Manicure e pedicure' : serviceName;
         modalTitle.textContent = displayTitle;
 
