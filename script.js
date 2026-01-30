@@ -12,7 +12,7 @@ const serviceSpecifications = {
 const professionals = {
     'Sobrancelha': {
         nome: 'Graziela',
-        foto: 'grazi/gra.jpg',
+        foto: 'grazi/graziela.jpg',
         descricao: 'Especialista em design de sobrancelhas com mais de 20 anos de experiência. Criadora do salão com visão artística única.'
     },
     'Cabeleireiro': {
@@ -22,28 +22,28 @@ const professionals = {
     },
     'Micropigmentação': {
         nome: 'Graziela',
-        foto: 'grazi/gra.jpg',
+        foto: 'grazi/graziela.jpg',
         descricao: 'Profissional altamente qualificado em técnicas avançadas de micropigmentação com resultados naturais e duradouros.'
     },
     'Estética Corporal': {
         nome: 'Vanessa',
-        foto: 'grazi/gra.jpg',
-        descricao: 'Esteticista especializada em tratamentos corporais. Profissional experiente e dedicada ao bem-estar das clientes.'
+        foto: 'img/funcionarios/vanessa.jpg',
+        descricao: 'Esteticista especializada com mais 20 anos de experiência em tratamentos corporais. Profissional experiente e dedicada ao bem-estar das clientes.'
     },
     'Manicure': [
         {
             nome: 'Jaque',
-            foto: 'grazi/gra.jpg',
-            descricao: 'Manicure experiente com especialização em design de unhas. Profissional criativa com excelente atenção aos detalhes.'
+            foto: 'img/funcionarios/jaque.jpg',
+            descricao: 'Manicure com 21 anos de experiência em especialização em design de unhas. Profissional criativa com excelente atenção aos detalhes.'
         },
         {
             nome: 'Eliana',
-            foto: 'grazi/gra.jpg',
-            descricao: 'Especialista em cuidados com pés e mãos. Profissional dedicada ao conforto e satisfação das clientes.'
+            foto: 'img/funcionarios/eliana.jpg',
+            descricao: 'Especialista em cuidados com pés e mãos. Profissional dedicada ao conforto e satisfação das clientes a 43 anos.'
         },
         {
             nome: 'Fran',
-            foto: 'grazi/gra.jpg',
+            foto: 'img/funcionarios/fran.jpg',
             descricao: 'Manicure com experiência em gel e acrílico. Profissional atenciosa que oferece acabamento impecável em todos os serviços.'
         },
         {
@@ -61,22 +61,22 @@ const professionals = {
         {
             nome: 'Silvia',
             foto: 'grazi/gra.jpg',
-            descricao: 'Depiladora experiente com especialização em depilação de cera. Profissional atenciosa com excelentes técnicas.'
+            descricao: 'Depiladora experiente com especialização em depilação de cera com 23 anos de experiência. Profissional atenciosa com excelentes técnicas.'
         },
         {
             nome: 'Nair',
             foto: 'grazi/gra.jpg',
-            descricao: 'Depiladora com técnica refinada e atendimento acolhedor. Especializada em cuidados com a pele e depilação sem irritação.'
+            descricao: 'Depiladora com técnica refinada e atendimento acolhedor. Especializada em cuidados com a pele e depilação sem irritação a 23 anos.'
         }
     ],
     'Estética Facial': {
         nome: 'Vanessa',
-        foto: 'grazi/gra.jpg',
-        descricao: 'Profissional especializada em tratamentos faciais personalizados com equipamentos de última geração.'
+        foto: 'img/funcionarios/vanessa.jpg',
+        descricao: 'Profissional especializada com 20 anos de experiência em tratamentos faciais personalizados com equipamentos de última geração.'
     },
     'Cílios': {
         nome: 'Graziela',
-        foto: 'grazi/gra.jpg',
+        foto: 'grazi/graziela.jpg',
         descricao: 'Profissional experiente em serviços de lash lifting, tintura e aplicação de cílios postiços com resultados naturais.'
     }
 };
