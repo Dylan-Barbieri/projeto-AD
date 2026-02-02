@@ -12,17 +12,17 @@ const serviceSpecifications = {
 const professionals = {
     'Sobrancelha': {
         nome: 'Graziela',
-        foto: 'grazi/graziela.jpg',
+        foto: 'img/funcionarios/graziela.jpg',
         descricao: 'Especialista em design de sobrancelhas com mais de 20 anos de experiência. Criadora do salão com visão artística única.'
     },
     'Cabeleireiro': {
         nome: 'Carlos',
-        foto: 'grazi/gra.jpg',
-        descricao: 'Cabeleireiro experiente com especialização em cortes, coloração e tratamentos capilares. Profissional dedicado com excelente reputação.'
+        foto: 'img/funcionarios/carlos.jpg',
+        descricao: 'Cabeleireiro experiente com especialização em cortes, coloração e tratamentos capilares. Profissional dedicado com excelente reputação a mais de 30 anos.'
     },
     'Micropigmentação': {
         nome: 'Graziela',
-        foto: 'grazi/graziela.jpg',
+        foto: 'img/funcionarios/graziela.jpg',
         descricao: 'Profissional altamente qualificado em técnicas avançadas de micropigmentação com resultados naturais e duradouros.'
     },
     'Estética Corporal': {
@@ -60,12 +60,12 @@ const professionals = {
     'Depilação': [
         {
             nome: 'Silvia',
-            foto: 'grazi/gra.jpg',
+            foto: 'img/funcionarios/silvia.jpg',
             descricao: 'Depiladora experiente com especialização em depilação de cera com 23 anos de experiência. Profissional atenciosa com excelentes técnicas.'
         },
         {
             nome: 'Nair',
-            foto: 'grazi/gra.jpg',
+            foto: 'img/funcionarios/nair.jpg',
             descricao: 'Depiladora com técnica refinada e atendimento acolhedor. Especializada em cuidados com a pele e depilação sem irritação a 23 anos.'
         }
     ],
@@ -76,7 +76,7 @@ const professionals = {
     },
     'Cílios': {
         nome: 'Graziela',
-        foto: 'grazi/graziela.jpg',
+        foto: 'img/funcionarios/graziela.jpg',
         descricao: 'Profissional experiente em serviços de lash lifting, tintura e aplicação de cílios postiços com resultados naturais.'
     }
 };
