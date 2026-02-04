@@ -82,7 +82,27 @@ const professionals = {
 };
 
 document.addEventListener('DOMContentLoaded', function () {
-    const header = document.querySelector('.navbar');
+    const announcementBar = document.querySelector('.announcement-bar');
+    const topBar = document.querySelector('.top-bar');
+    const secondaryNav = document.querySelector('.secondary-nav');
+    const root = document.documentElement;
+
+    function updateHeaderOffset() {
+        const announcementHeight = announcementBar ? announcementBar.offsetHeight : 0;
+        const topBarHeight = topBar ? topBar.offsetHeight : 0;
+        const secondaryNavHeight = secondaryNav ? secondaryNav.offsetHeight : 0;
+        
+        const totalOffset = announcementHeight + topBarHeight + secondaryNavHeight;
+        
+        root.style.setProperty('--header-offset', `${totalOffset}px`);
+        document.body.style.paddingTop = `${totalOffset}px`;
+    }
+
+    updateHeaderOffset();
+
+    window.addEventListener('resize', updateHeaderOffset);
+
+    const fixedTopContainer = document.querySelector('.fixed-top');
     const serviceModal = document.getElementById('serviceModal');
     const professionalModal = document.getElementById('professionalModal');
     let lastScrollTop = 0;
@@ -90,30 +110,33 @@ document.addEventListener('DOMContentLoaded', function () {
     window.addEventListener('scroll', function() {
         let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
-        if (scrollTop > lastScrollTop) {
-            header.classList.add('navbar-hidden');
-        } else if (scrollTop === 0) {
-            header.classList.remove('navbar-hidden');
+        if (scrollTop > lastScrollTop && scrollTop > fixedTopContainer.offsetHeight) {
+            fixedTopContainer.classList.add('navbar-hidden');
+        } else {
+            fixedTopContainer.classList.remove('navbar-hidden');
         }
 
         lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
 
         if (scrollTop > 50) {
-            header.classList.add('navbar-scrolled');
+            fixedTopContainer.classList.add('navbar-scrolled');
         } else {
-            header.classList.remove('navbar-scrolled');
+            fixedTopContainer.classList.remove('navbar-scrolled');
         }
     });
 
-    const searchInput = document.getElementById('searchInput');
-    const searchResults = document.getElementById('searchResults');
+    const headerSearchInput = document.getElementById('searchInput');
+    const headerSearchResults = document.getElementById('searchResults');
+    const mobileSearchInput = document.getElementById('searchInputMobile');
+    const mobileSearchResults = document.getElementById('searchResultsMobile');
 
-    if (searchInput) {
-        searchInput.addEventListener('input', function() {
+    function setupSearch(inputEl, resultsEl) {
+        inputEl.addEventListener('input', function() {
             const searchTerm = this.value.toLowerCase().trim();
-            
+
             if (searchTerm === '') {
-                searchResults.classList.remove('show');
+                resultsEl.classList.remove('show');
+                resultsEl.innerHTML = '';
                 return;
             }
 
@@ -175,7 +198,7 @@ document.addEventListener('DOMContentLoaded', function () {
             });
 
             if (results.length > 0) {
-                searchResults.innerHTML = results.map(result => {
+                resultsEl.innerHTML = results.map(result => {
                     const displayName = result.name === 'Manicure' ? 'Unha' : result.name;
                     return `
                     <div class="search-result-item" data-name="${result.name}" data-type="${result.type}" data-service="${result.service || result.name}">
@@ -184,16 +207,16 @@ document.addEventListener('DOMContentLoaded', function () {
                     </div>
                 `;
                 }).join('');
-                searchResults.classList.add('show');
+                resultsEl.classList.add('show');
 
-                attachSearchResultHandlers();
+                attachSearchResultHandlers(resultsEl, inputEl);
             } else {
-                searchResults.innerHTML = '<div class="search-result-item" style="text-align: center; color: #B59B85;">Nenhum resultado encontrado</div>';
-                searchResults.classList.add('show');
+                resultsEl.innerHTML = '<div class="search-result-item" style="text-align: center; color: #B59B85;">Nenhum resultado encontrado</div>';
+                resultsEl.classList.add('show');
             }
         });
 
-        searchInput.addEventListener('keypress', function(e) {
+        inputEl.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 const searchTerm = this.value.toLowerCase().trim();
                 if (searchTerm === '') return;
@@ -218,8 +241,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 if (professionalName) {
                     openProfessionalModal(professionalName, professionalService);
-                    searchInput.value = '';
-                    searchResults.classList.remove('show');
+                    inputEl.value = '';
+                    resultsEl.classList.remove('show');
                     return;
                 }
 
@@ -232,28 +255,28 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 if (serviceName) {
                     openServiceModal(serviceName);
-                    searchInput.value = '';
-                    searchResults.classList.remove('show');
+                    inputEl.value = '';
+                    resultsEl.classList.remove('show');
                 }
-            }
-        });
-
-        document.addEventListener('click', function(event) {
-            if (!event.target.closest('.search-bar-container')) {
-                searchResults.classList.remove('show');
             }
         });
     }
 
-    function attachSearchResultHandlers() {
-        searchResults.querySelectorAll('.search-result-item').forEach(item => {
+    document.addEventListener('click', function(event) {
+        if (!event.target.closest('.search-bar-container')) {
+            document.querySelectorAll('.search-results').forEach(el => el.classList.remove('show'));
+        }
+    });
+
+    function attachSearchResultHandlers(resultsEl, inputEl) {
+        resultsEl.querySelectorAll('.search-result-item').forEach(item => {
             item.addEventListener('click', function() {
                 const name = this.getAttribute('data-name');
                 const type = this.getAttribute('data-type');
                 const serviceName = this.getAttribute('data-service');
                 
-                searchInput.value = '';
-                searchResults.classList.remove('show');
+                inputEl.value = '';
+                resultsEl.classList.remove('show');
 
                 if (type === 'Profissional') {
                     openProfessionalModal(name, serviceName);
@@ -263,6 +286,9 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
     }
+
+    if (headerSearchInput && headerSearchResults) setupSearch(headerSearchInput, headerSearchResults);
+    if (mobileSearchInput && mobileSearchResults) setupSearch(mobileSearchInput, mobileSearchResults);
 
     function openServiceModal(serviceName) {
         const specification = serviceSpecifications[serviceName] || 'Serviço não encontrado';
