@@ -1,7 +1,6 @@
-
 .announcement-bar {
-    background-color: #4A443F;
-    color: #E8E1DA;
+    background-color: #D1C4B9;
+    color: #000000;
     text-align: center;
     padding: 6px 0;
     font-size: 0.95rem;
@@ -18,8 +17,8 @@
 
 body {
     font-family: 'Poppins', 'Helvetica Neue', sans-serif;
-    background-color: #E8E1DA;
-    color: #4A443F;
+    background-color: #ffffff;
+    color: #000000;
     padding-top: var(--header-offset);
 }
 
@@ -29,7 +28,7 @@ body {
 } 
 
 h1, h2, h3, h4, h5, h6 {
-    color: #4A443F;
+    color: #000000;
     font-weight: 600;
 }
 
@@ -54,7 +53,7 @@ section {
 }
 
 .navbar-light .navbar-nav .nav-link {
-    color: #4A443F;
+    color: #000000;
     font-weight: 500;
     font-size: 1.3rem;
 }
@@ -79,12 +78,13 @@ section {
 }
 
 .navbar-brand img {
-    max-height: calc(var(--topbar-height) - 20px);
+    max-height: 200px !important;
+    max-width: 300px !important;
     width: auto;
-    max-width: 300px;
     height: auto;
     border-radius: 8px;
     display: block;
+    transition: all 0.3s ease;
 }
 
 @media (max-width: 992px) {
@@ -185,8 +185,8 @@ section {
 }
 
 .top-bar .header-actions .btn {
-    background-color: #B59B85;
-    border-color: #B59B85;
+    background-color: #D1C4B9;
+    border-color: #D1C4B9;
     color: #fff;
     font-weight: 600;
     padding: 0.5rem 0.9rem;
@@ -205,7 +205,7 @@ section {
     justify-content: center;
     padding: 0.5rem 0.7rem;
     border-radius: 6px;
-    color: #4A443F;
+    color: #B59B85;
 }
 
 .top-bar .header-actions .header-search .nav-link:hover {
@@ -214,7 +214,7 @@ section {
 
 .top-bar .header-actions .btn {
     background-color: #B59B85;
-    border-color: #B59B85;
+    border-color: #D1C4B9;
     color: #fff;
     font-weight: 500;
     padding: 0.45rem 0.8rem;
@@ -260,7 +260,7 @@ section {
 
 #servicos .card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 15px rgba(74, 68, 63, 0.1);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
 }
 
 .service-img {
@@ -447,7 +447,7 @@ section {
 }
 
 footer {
-    background-color: #E8E1DA;
+    background-color: #ffffff;
     color: #000000;
     padding: 2rem 0;
     text-align: center;
