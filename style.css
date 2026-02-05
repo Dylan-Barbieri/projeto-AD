@@ -392,8 +392,8 @@ section {
     position: absolute;
     top: 0px;
     right: 0px;
-    background-color: red;
-    color: white;
+    background-color: #ff0000;
+    color: #ffffff;
     border-radius: 50%;
     width: 25px;
     height: 25px;
@@ -402,7 +402,7 @@ section {
     justify-content: center;
     align-items: center;
     font-weight: bold;
-    border: 2px solid white;
+    border: 2px solid #ffffff;
 }
 
 .instagram-float {
@@ -602,14 +602,14 @@ html, body {
 }
 
 .top-bar {
-    background-color: #E8E1DA;
+    background-color: #ffffff;
     position: relative;
     min-height: var(--topbar-height);
     padding: 12px 0;
 }  
 
 .secondary-nav {
-    background-color: #E8E1DA;
+    background-color: #ffffff;
 }
 
 .header-social-icons {
