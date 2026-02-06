@@ -24,7 +24,7 @@ body {
 
 .fixed-top {
     top: var(--announcement-height);
-    z-index: 1400;
+    z-index: 1030 !important;
 } 
 
 h1, h2, h3, h4, h5, h6 {
@@ -48,8 +48,10 @@ section {
 }
 
 .navbar-scrolled {
-    background-color: #E8E1DA !important;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    background-color: rgba(232, 225, 218, 0.8) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.01);
 }
 
 .navbar-light .navbar-nav .nav-link {

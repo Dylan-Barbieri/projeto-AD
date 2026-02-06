@@ -1,3 +1,5 @@
+const WHATSAPP_NUMBER = "551150732011";
+
 const serviceSpecifications = {
     'Sobrancelha': 'Serviços especializados de design e tratamento de sobrancelhas com técnicas modernas e profissional experiente. Oferecemos desde design clássico até técnicas avançadas.',
     'Cabeleireiro': 'Cortes realizados por profissional especializado. Oferecemos coloração, escova progressiva, botox capilar e muito mais.',
@@ -31,450 +33,179 @@ const professionals = {
         descricao: 'Esteticista especializada com mais 20 anos de experiência em tratamentos corporais. Profissional experiente e dedicada ao bem-estar das clientes.'
     },
     'Manicure': [
-        {
-            nome: 'Jaque',
-            foto: 'img/funcionarios/jaque.jpg',
-            descricao: 'Manicure com 21 anos de experiência em especialização em design de unhas. Profissional criativa com excelente atenção aos detalhes.'
-        },
-        {
-            nome: 'Eliana',
-            foto: 'img/funcionarios/eliana.jpg',
-            descricao: 'Especialista em cuidados com pés e mãos. Profissional dedicada ao conforto e satisfação das clientes a 43 anos.'
-        },
-        {
-            nome: 'Fran',
-            foto: 'img/funcionarios/fran.jpg',
-            descricao: 'Manicure com experiência em gel e acrílico. Profissional atenciosa que oferece acabamento impecável em todos os serviços.'
-        },
-        {
-            nome: 'Bete',
-            foto: 'grazi/gra.jpg',
-            descricao: 'Especialista em nail art e designs personalizados. Profissional criativa com visão artística apurada.'
-        },
-        {
-            nome: 'Claudia',
-            foto: 'grazi/gra.jpg',
-            descricao: 'Manicure experiente com foco em hidratação e cuidados preventivos. Profissional dedicada à saúde das unhas.'
-        }
+        { nome: 'Jaque', foto: 'img/funcionarios/jaque.jpg', descricao: 'Manicure com 21 anos de experiência em especialização em design de unhas.' },
+        { nome: 'Eliana', foto: 'img/funcionarios/eliana.jpg', descricao: 'Especialista em cuidados com pés e mãos a 43 anos.' },
+        { nome: 'Fran', foto: 'img/funcionarios/fran.jpg', descricao: 'Manicure com experiência em gel e acrílico.' },
+        { nome: 'Bete', foto: 'grazi/gra.jpg', descricao: 'Especialista em nail art e designs personalizados.' },
+        { nome: 'Claudia', foto: 'grazi/gra.jpg', descricao: 'Manicure experiente com foco em hidratação.' }
     ],
     'Depilação': [
-        {
-            nome: 'Silvia',
-            foto: 'img/funcionarios/silvia.jpg',
-            descricao: 'Depiladora experiente com especialização em depilação de cera com 23 anos de experiência. Profissional atenciosa com excelentes técnicas.'
-        },
-        {
-            nome: 'Nair',
-            foto: 'img/funcionarios/nair.jpg',
-            descricao: 'Depiladora com técnica refinada e atendimento acolhedor. Especializada em cuidados com a pele e depilação sem irritação a 23 anos.'
-        }
+        { nome: 'Silvia', foto: 'img/funcionarios/silvia.jpg', descricao: 'Depiladora experiente com 23 anos de experiência.' },
+        { nome: 'Nair', foto: 'img/funcionarios/nair.jpg', descricao: 'Atendimento acolhedor e especializada em peles sensíveis.' }
     ],
     'Estética Facial': {
         nome: 'Vanessa',
         foto: 'img/funcionarios/vanessa.jpg',
-        descricao: 'Profissional especializada com 20 anos de experiência em tratamentos faciais personalizados com equipamentos de última geração.'
+        descricao: 'Profissional especializada com 20 anos de experiência em tratamentos faciais.'
     },
     'Cílios': {
         nome: 'Graziela',
         foto: 'img/funcionarios/graziela.jpg',
-        descricao: 'Profissional experiente em serviços de lash lifting, tintura e aplicação de cílios postiços com resultados naturais.'
+        descricao: 'Profissional experiente em lash lifting e maquiagem profissional.'
     }
 };
 
+// --- FUNÇÕES AUXILIARES ---
+
+function generateWhatsAppLink(profissional, servico) {
+    const text = `Olá! Gostaria de agendar um horário de ${servico.toLowerCase()} com a profissional ${profissional}.`;
+    return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
+}
+
+function renderServiceModalContent(serviceName) {
+    const serviceModal = document.getElementById('serviceModal');
+    const modalTitle = serviceModal.querySelector('.modal-title');
+    const modalBody = document.getElementById('serviceModalBody');
+    
+    const specification = serviceSpecifications[serviceName] || 'Serviço não encontrado';
+    const professionalData = professionals[serviceName];
+    
+    modalTitle.textContent = serviceName === 'Manicure' ? 'Manicure e Pedicure' : serviceName;
+
+    let html = '<div class="service-details">';
+    
+    if (professionalData) {
+        html += '<h6 class="text-muted mb-3">Especialistas Disponíveis</h6>';
+        const profs = Array.isArray(professionalData) ? professionalData : [professionalData];
+        
+        profs.forEach(prof => {
+            html += `
+            <div class="professional-card p-3 mb-3 border rounded">
+                <div class="row align-items-center">
+                    <div class="col-4 col-md-3 text-center">
+                        <img src="${prof.foto}" class="rounded-circle img-fluid" style="width: 80px; height: 80px; object-fit: cover; border: 2px solid #B59B85;">
+                    </div>
+                    <div class="col-8 col-md-9">
+                        <h5 class="mb-1">${prof.nome}</h5>
+                        <p class="text-muted small mb-2">${prof.descricao}</p>
+                        <a href="${generateWhatsAppLink(prof.nome, serviceName)}" target="_blank" class="btn btn-success btn-sm">
+                            <i class="fab fa-whatsapp"></i> Agendar com ${prof.nome}
+                        </a>
+                    </div>
+                </div>
+            </div>`;
+        });
+    }
+
+    html += `<hr><p class="lead">${specification}</p></div>`;
+    modalBody.innerHTML = html;
+}
+
+// --- INICIALIZAÇÃO DO DOM ---
+
 document.addEventListener('DOMContentLoaded', function () {
+    const root = document.documentElement;
     const announcementBar = document.querySelector('.announcement-bar');
     const topBar = document.querySelector('.top-bar');
     const secondaryNav = document.querySelector('.secondary-nav');
-    const root = document.documentElement;
+    const fixedTopContainer = document.querySelector('.fixed-top');
 
+    // Cálculo de Offset do Header
     function updateHeaderOffset() {
-        const announcementHeight = announcementBar ? announcementBar.offsetHeight : 0;
-        const topBarHeight = topBar ? topBar.offsetHeight : 0;
-        const secondaryNavHeight = secondaryNav ? secondaryNav.offsetHeight : 0;
-        
-        const totalOffset = announcementHeight + topBarHeight + secondaryNavHeight;
-        
-        root.style.setProperty('--header-offset', `${totalOffset}px`);
-        document.body.style.paddingTop = `${totalOffset}px`;
+        const h1 = announcementBar?.offsetHeight || 0;
+        const h2 = topBar?.offsetHeight || 0;
+        const h3 = secondaryNav?.offsetHeight || 0;
+        const total = h1 + h2 + h3;
+        root.style.setProperty('--header-offset', `${total}px`);
+        document.body.style.paddingTop = `${total}px`;
     }
-
     updateHeaderOffset();
-
     window.addEventListener('resize', updateHeaderOffset);
 
-    const fixedTopContainer = document.querySelector('.fixed-top');
-    const serviceModal = document.getElementById('serviceModal');
-    const professionalModal = document.getElementById('professionalModal');
-    let lastScrollTop = 0;
-
+    // Efeito de Scroll na Navbar
     window.addEventListener('scroll', function() {
-        let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    let st = window.pageYOffset || document.documentElement.scrollTop;
+    const fixedTopContainer = document.querySelector('.fixed-top');
+    if (st > 50) {
+        fixedTopContainer.classList.add('navbar-hidden');
+        
+    } else {
+        fixedTopContainer.classList.remove('navbar-hidden');
+    }
+});
 
-        if (scrollTop > lastScrollTop && scrollTop > fixedTopContainer.offsetHeight) {
-            fixedTopContainer.classList.add('navbar-hidden');
-        } else {
-            fixedTopContainer.classList.remove('navbar-hidden');
-        }
-
-        lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
-
-        if (scrollTop > 50) {
-            fixedTopContainer.classList.add('navbar-scrolled');
-        } else {
-            fixedTopContainer.classList.remove('navbar-scrolled');
-        }
-    });
-
-    const headerSearchInput = document.getElementById('searchInput');
-    const headerSearchResults = document.getElementById('searchResults');
-    const mobileSearchInput = document.getElementById('searchInputMobile');
-    const mobileSearchResults = document.getElementById('searchResultsMobile');
-
-    function setupSearch(inputEl, resultsEl) {
+    // --- LÓGICA DE BUSCA ---
+    const setupSearch = (inputEl, resultsEl) => {
         inputEl.addEventListener('input', function() {
-            const searchTerm = this.value.toLowerCase().trim();
+            const term = this.value.toLowerCase().trim();
+            if (!term) { resultsEl.classList.remove('show'); return; }
 
-            if (searchTerm === '') {
-                resultsEl.classList.remove('show');
-                resultsEl.innerHTML = '';
-                return;
-            }
-
-            const services = ['Sobrancelha', 'Cabeleireiro', 'Micropigmentação', 'Estética Corporal', 'Manicure', 'Depilação', 'Estética Facial', 'Cílios'];
             let results = [];
-            let uniqueResults = new Set();
-
-            services.forEach(service => {
-                if (service.toLowerCase().includes(searchTerm)) {
-                    const resultKey = `service-${service}`;
-                    if (!uniqueResults.has(resultKey)) {
-                        results.push({
-                            name: service,
-                            type: 'Serviço'
-                        });
-                        uniqueResults.add(resultKey);
-                    }
+            // Buscar Serviços
+            Object.keys(serviceSpecifications).forEach(s => {
+                if (s.toLowerCase().includes(term) || (s === 'Manicure' && 'unha'.includes(term))) {
+                    results.push({ name: s, type: 'Serviço' });
                 }
             });
-
-            if ('unha'.toLowerCase().includes(searchTerm)) {
-                const resultKey = `service-Manicure`;
-                if (!uniqueResults.has(resultKey)) {
-                    results.push({
-                        name: 'Manicure',
-                        type: 'Serviço'
-                    });
-                    uniqueResults.add(resultKey);
-                }
-            }
-
-            Object.keys(professionals).forEach(serviceKey => {
-                const professionalData = professionals[serviceKey];
-                if (Array.isArray(professionalData)) {
-                    professionalData.forEach(prof => {
-                        if (prof.nome.toLowerCase().includes(searchTerm)) {
-                            const resultKey = `prof-${prof.nome}`;
-                            if (!uniqueResults.has(resultKey)) {
-                                results.push({
-                                    name: prof.nome,
-                                    type: 'Profissional',
-                                    service: serviceKey
-                                });
-                                uniqueResults.add(resultKey);
-                            }
-                        }
-                    });
-                } else if (professionalData.nome && professionalData.nome.toLowerCase().includes(searchTerm)) {
-                    const resultKey = `prof-${professionalData.nome}`;
-                    if (!uniqueResults.has(resultKey)) {
-                        results.push({
-                            name: professionalData.nome,
-                            type: 'Profissional',
-                            service: serviceKey
-                        });
-                        uniqueResults.add(resultKey);
+            // Buscar Profissionais
+            Object.keys(professionals).forEach(s => {
+                const pData = professionals[s];
+                const pArray = Array.isArray(pData) ? pData : [pData];
+                pArray.forEach(p => {
+                    if (p.nome.toLowerCase().includes(term)) {
+                        results.push({ name: p.nome, type: 'Profissional', service: s });
                     }
-                }
+                });
             });
 
             if (results.length > 0) {
-                resultsEl.innerHTML = results.map(result => {
-                    const displayName = result.name === 'Manicure' ? 'Unha' : result.name;
-                    return `
-                    <div class="search-result-item" data-name="${result.name}" data-type="${result.type}" data-service="${result.service || result.name}">
-                        <div class="search-result-title">${displayName}</div>
-                        <div class="search-result-type">${result.type}</div>
+                resultsEl.innerHTML = results.map(r => `
+                    <div class="search-result-item" onclick="handleSearchClick('${r.name}', '${r.type}', '${r.service || r.name}')">
+                        <div class="search-result-title">${r.name === 'Manicure' ? 'Unha' : r.name}</div>
+                        <div class="search-result-type">${r.type}</div>
                     </div>
-                `;
-                }).join('');
+                `).join('');
                 resultsEl.classList.add('show');
-
-                attachSearchResultHandlers(resultsEl, inputEl);
             } else {
-                resultsEl.innerHTML = '<div class="search-result-item" style="text-align: center; color: #B59B85;">Nenhum resultado encontrado</div>';
+                resultsEl.innerHTML = '<div class="p-3 text-center text-muted">Nenhum resultado</div>';
                 resultsEl.classList.add('show');
             }
         });
+    };
 
-        inputEl.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                const searchTerm = this.value.toLowerCase().trim();
-                if (searchTerm === '') return;
-
-                let professionalName = null;
-                let professionalService = null;
-                for (const serviceKey in professionals) {
-                    const profData = professionals[serviceKey];
-                    if (Array.isArray(profData)) {
-                        const found = profData.find(p => p.nome.toLowerCase() === searchTerm);
-                        if (found) {
-                            professionalName = found.nome;
-                            professionalService = serviceKey;
-                            break;
-                        }
-                    } else if (profData.nome && profData.nome.toLowerCase() === searchTerm) {
-                        professionalName = profData.nome;
-                        professionalService = serviceKey;
-                        break;
-                    }
-                }
-
-                if (professionalName) {
-                    openProfessionalModal(professionalName, professionalService);
-                    inputEl.value = '';
-                    resultsEl.classList.remove('show');
-                    return;
-                }
-
-                const services = ['Sobrancelha', 'Cabeleireiro', 'Micropigmentação', 'Estética Corporal', 'Manicure', 'Depilação', 'Estética Facial', 'Cílios'];
-                let serviceName = services.find(s => s.toLowerCase() === searchTerm);
-                
-                if (!serviceName && searchTerm === 'unha') {
-                    serviceName = 'Manicure';
-                }
-
-                if (serviceName) {
-                    openServiceModal(serviceName);
-                    inputEl.value = '';
-                    resultsEl.classList.remove('show');
-                }
-            }
-        });
-    }
-
-    document.addEventListener('click', function(event) {
-        if (!event.target.closest('.search-bar-container')) {
-            document.querySelectorAll('.search-results').forEach(el => el.classList.remove('show'));
-        }
-    });
-
-    function attachSearchResultHandlers(resultsEl, inputEl) {
-        resultsEl.querySelectorAll('.search-result-item').forEach(item => {
-            item.addEventListener('click', function() {
-                const name = this.getAttribute('data-name');
-                const type = this.getAttribute('data-type');
-                const serviceName = this.getAttribute('data-service');
-                
-                inputEl.value = '';
-                resultsEl.classList.remove('show');
-
-                if (type === 'Profissional') {
-                    openProfessionalModal(name, serviceName);
-                } else {
-                    openServiceModal(name);
-                }
-            });
-        });
-    }
-
-    if (headerSearchInput && headerSearchResults) setupSearch(headerSearchInput, headerSearchResults);
-    if (mobileSearchInput && mobileSearchResults) setupSearch(mobileSearchInput, mobileSearchResults);
-
-    function openServiceModal(serviceName) {
-        const specification = serviceSpecifications[serviceName] || 'Serviço não encontrado';
-        const professional = professionals[serviceName];
-        const modalTitle = serviceModal.querySelector('.modal-title');
-        const modalBody = document.getElementById('serviceModalBody');
-
-        const displayTitle = serviceName === 'Manicure' ? 'Manicure e pedicure' : serviceName;
-        modalTitle.textContent = displayTitle;
-
-        let html = '<div class="service-details">';
-        
-        if (Array.isArray(professional)) {
-            html += '<div class="professionals-section mb-4">';
-            html += '<h6 class="text-muted mb-3">Responsáveis pelo Serviço</h6>';
-            professional.forEach((prof, index) => {
-                html += '<div class="professional-card mb-3">';
-                html += '<div class="row align-items-center">';
-                html += '<div class="col-md-4 text-center">';
-                html += `<img src="${prof.foto}" alt="${prof.nome}" class="professional-img img-fluid rounded-circle" style="width: 150px; height: 150px; object-fit: cover; border: 3px solid #B59B85;">`;
-                html += '</div>';
-                html += '<div class="col-md-8">';
-                html += `<h5 class="mb-2">${prof.nome}</h5>`;
-                html += `<p class="text-muted">${prof.descricao}</p>`;
-                html += '</div>';
-                html += '</div>';
-                if (index < professional.length - 1) {
-                    html += '<hr class="my-3">';
-                }
-                html += '</div>';
-            });
-            html += '</div>';
-        } else if (professional && professional.nome) {
-            html += '<div class="professional-section mb-4">';
-            html += '<div class="row align-items-center">';
-            html += '<div class="col-md-4 text-center">';
-            html += `<img src="${professional.foto}" alt="${professional.nome}" class="professional-img img-fluid rounded-circle" style="width: 150px; height: 150px; object-fit: cover; border: 3px solid #B59B85;">`;
-            html += '</div>';
-            html += '<div class="col-md-8">';
-            html += '<h6 class="text-muted">Responsável pelo Serviço</h6>';
-            html += `<h5 class="mb-2">${professional.nome}</h5>`;
-            html += `<p class="text-muted">${professional.descricao}</p>`;
-            html += '</div>';
-            html += '</div>';
-            html += '</div>';
-        }
-        
-        html += '<hr>';
-        html += `<p class="lead mb-4">${specification}</p>`;
-        html += '</div>';
-        
-        modalBody.innerHTML = html;
-        const bsModal = new bootstrap.Modal(serviceModal);
-        bsModal.show();
-    }
-
-    function openProfessionalModal(professionalName, serviceName) {
-        const professionalData = professionals[serviceName];
-        let professional;
-
-        if (Array.isArray(professionalData)) {
-            professional = professionalData.find(p => p.nome === professionalName);
-        } else if (professionalData && professionalData.nome === professionalName) {
-            professional = professionalData;
-        }
-
-        if (!professional) {
-            console.error('Profissional não encontrado:', professionalName);
-            return;
-        }
-
-        const modalTitle = professionalModal.querySelector('.modal-title');
-        const modalBody = document.getElementById('professionalModalBody');
-
-        modalTitle.textContent = professional.nome;
-
-        let html = '<div class="professional-details">';
-        html += '<div class="row align-items-center">';
-        html += '<div class="col-md-4 text-center">';
-        html += `<img src="${professional.foto}" alt="${professional.nome}" class="professional-img img-fluid rounded-circle" style="width: 150px; height: 150px; object-fit: cover; border: 3px solid #B59B85;">`;
-        html += '</div>';
-        html += '<div class="col-md-8">';
-        html += `<h5 class="mb-2">${professional.nome}</h5>`;
-        html += `<p class="text-muted">${professional.descricao}</p>`;
-        html += `<p class="text-muted"><strong>Serviço:</strong> ${serviceName}</p>`;
-        html += '</div>';
-        html += '</div>';
-        html += '</div>';
-
-        modalBody.innerHTML = html;
-        const bsModal = new bootstrap.Modal(professionalModal);
-        bsModal.show();
-    }
+    setupSearch(document.getElementById('searchInput'), document.getElementById('searchResults'));
+    setupSearch(document.getElementById('searchInputMobile'), document.getElementById('searchResultsMobile'));
 });
 
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
+// --- CLIQUES E MODAIS ---
 
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-            behavior: 'smooth'
-        });
-    });
-});
+function handleSearchClick(name, type, service) {
+    document.querySelectorAll('.search-results').forEach(el => el.classList.remove('show'));
+    renderServiceModalContent(service);
+    const modal = new bootstrap.Modal(document.getElementById('serviceModal'));
+    modal.show();
+}
 
+// Listener para os cards de serviço da página
 const serviceModal = document.getElementById('serviceModal');
 if (serviceModal) {
     serviceModal.addEventListener('show.bs.modal', function (event) {
         const button = event.relatedTarget;
-        let serviceName = button.getAttribute('data-service');
-        
-        if (!serviceName && button.parentElement) {
-            serviceName = button.parentElement.getAttribute('data-service');
-        }
-        
-        const modalTitle = serviceModal.querySelector('.modal-title');
-        const modalBody = document.getElementById('serviceModalBody');
-
-        const displayTitle = serviceName === 'Manicure' ? 'Manicure e pedicure' : serviceName;
-        modalTitle.textContent = displayTitle;
-
-        const specification = serviceSpecifications[serviceName] || 'Serviço não encontrado';
-        const professional = professionals[serviceName];
-        
-        let html = '<div class="service-details">';
-        
-        if (Array.isArray(professional)) {
-            html += '<div class="professionals-section mb-4">';
-            html += '<h6 class="text-muted mb-3">Responsáveis pelo Serviço</h6>';
-            professional.forEach((prof, index) => {
-                html += '<div class="professional-card mb-3">';
-                html += '<div class="row align-items-center">';
-                html += '<div class="col-md-4 text-center">';
-                html += '<img src="' + prof.foto + '" alt="' + prof.nome + '" class="professional-img img-fluid rounded-circle" style="width: 150px; height: 150px; object-fit: cover; border: 3px solid #B59B85;">';
-                html += '</div>';
-                html += '<div class="col-md-8">';
-                html += '<h5 class="mb-2">' + prof.nome + '</h5>';
-                html += '<p class="text-muted">' + prof.descricao + '</p>';
-                html += '</div>';
-                html += '</div>';
-                if (index < professional.length - 1) {
-                    html += '<hr class="my-3">';
-                }
-                html += '</div>';
-            });
-            html += '</div>';
-        } else if (professional && professional.nome) {
-            html += '<div class="professional-section mb-4">';
-            html += '<div class="row align-items-center">';
-            html += '<div class="col-md-4 text-center">';
-            html += '<img src="' + professional.foto + '" alt="' + professional.nome + '" class="professional-img img-fluid rounded-circle" style="width: 150px; height: 150px; object-fit: cover; border: 3px solid #B59B85;">';
-            html += '</div>';
-            html += '<div class="col-md-8">';
-            html += '<h6 class="text-muted">Responsável pelo Serviço</h6>';
-            html += '<h5 class="mb-2">' + professional.nome + '</h5>';
-            html += '<p class="text-muted">' + professional.descricao + '</p>';
-            html += '</div>';
-            html += '</div>';
-            html += '</div>';
-        }
-        
-        html += '<hr>';
-        html += '<p class="lead mb-4">' + specification + '</p>';
-        
-        html += '</div>';
-        modalBody.innerHTML = html;
+        if (!button) return; 
+        const serviceName = button.getAttribute('data-service') || button.parentElement.getAttribute('data-service');
+        if (serviceName) renderServiceModalContent(serviceName);
     });
 }
 
-const galleryModal = document.getElementById('galleryModal');
-if (galleryModal) {
-    const galleryModalImage = document.getElementById('galleryModalImage');
-    const muralGrid = document.querySelector('.mural-grid');
-    const bsGalleryModal = new bootstrap.Modal(galleryModal);
-
-    if (muralGrid) {
-        muralGrid.addEventListener('click', function(e) {
-            if (e.target.tagName === 'IMG') {
-                galleryModalImage.src = e.target.src;
-                bsGalleryModal.show();
-            }
-        });
-    }
+// Galeria e AOS
+const muralGrid = document.querySelector('.mural-grid');
+if (muralGrid) {
+    muralGrid.addEventListener('click', function(e) {
+        if (e.target.tagName === 'IMG') {
+            document.getElementById('galleryModalImage').src = e.target.src;
+            new bootstrap.Modal(document.getElementById('galleryModal')).show();
+        }
+    });
 }
-AOS.init({
-    duration: 1000,
-    once: true,
-    offset: 50
-});
+
+AOS.init({ duration: 1000, once: true });
