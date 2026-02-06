@@ -1,14 +1,14 @@
 const WHATSAPP_NUMBER = "551150732011";
 
 const serviceSpecifications = {
-    'Sobrancelha': 'Serviços especializados de design e tratamento de sobrancelhas com técnicas modernas e profissional experiente. Oferecemos desde design clássico até técnicas avançadas.',
+    'Sobrancelha': 'Serviços especializados de design e tratamento de sobrancelhas com técnicas modernas e profissional experiente.',
     'Cabeleireiro': 'Cortes realizados por profissional especializado. Oferecemos coloração, escova progressiva, botox capilar e muito mais.',
-    'Micropigmentação': 'Técnica avançada de micropigmentação para sobrancelhas, olhos e lábios. Resultados naturais e duradouros com profissional altamente qualificada.',
-    'Estética Corporal': 'Tratamentos corporais completos incluindo drenagem linfática, ultracavitação, radiofrequência e massagens relaxantes para revitalizar seu corpo.',
+    'Micropigmentação': 'Técnica avançada de micropigmentação para sobrancelhas, olhos e lábios com resultados naturais.',
+    'Estética Corporal': 'Tratamentos corporais completos incluindo drenagem linfática e massagens relaxantes.',
     'Manicure': 'Esmaltação tradicional, cuidados com as cutículas e spa dos pés em ambiente higienizado.',
-    'Depilação': 'Depilação com técnicas seguras e eficazes utilizando cera de mel e algas, de qualidade premium. Atendimento atencioso em ambiente limpo e aconchegante.',
-    'Estética Facial': 'Tratamentos faciais personalizados para limpeza profunda, hidratação, rejuvenescimento e microagulhamento com equipamentos de última geração.',
-    'Cílios': 'Serviços de lash lifting, tintura, cílios postiços e maquiagem profissional para realçar o olhar de forma natural e elegante.'
+    'Depilação': 'Depilação com técnicas seguras utilizando cera de qualidade premium.',
+    'Estética Facial': 'Tratamentos faciais personalizados para limpeza profunda, hidratação e rejuvenescimento.',
+    'Cílios': 'Serviços de lash lifting e maquiagem profissional para realçar o olhar de forma natural.'
 };
 
 const professionals = {
@@ -35,12 +35,12 @@ const professionals = {
     'Manicure': [
         { nome: 'Jaque', foto: 'img/funcionarios/jaque.jpg', descricao: 'Manicure com 21 anos de experiência em especialização em design de unhas.' },
         { nome: 'Eliana', foto: 'img/funcionarios/eliana.jpg', descricao: 'Especialista em cuidados com pés e mãos a 43 anos.' },
-        { nome: 'Fran', foto: 'img/funcionarios/fran.jpg', descricao: 'Manicure com experiência em gel e acrílico.' },
-        { nome: 'Bete', foto: 'grazi/gra.jpg', descricao: 'Especialista em nail art e designs personalizados.' },
-        { nome: 'Claudia', foto: 'grazi/gra.jpg', descricao: 'Manicure experiente com foco em hidratação.' }
+        { nome: 'Fran', foto: 'img/funcionarios/fran.jpg', descricao: 'Focada no cuidado profundo e bem-estar, oferecendo cuticulagem perfeita e hidratação' },
+        { nome: 'Bete', foto: 'img/funcionarios/bete.jpg', descricao: 'Especialista em esmaltação clássica com acabamento impecável.' },
+        { nome: 'Claudia', foto: 'img/funcionarios/claudia.jpg', descricao: 'Especialista a 9 anos fazendo unhas perfeitas com atendimento rápido e cuidadoso.' }
     ],
     'Depilação': [
-        { nome: 'Silvia', foto: 'img/funcionarios/silvia.jpg', descricao: 'Depiladora experiente com 23 anos de experiência.' },
+        { nome: 'Silvia', foto: 'img/funcionarios/silvia.jpg', descricao: 'Depiladora experiente com 23 anos de excelência técnica.' },
         { nome: 'Nair', foto: 'img/funcionarios/nair.jpg', descricao: 'Atendimento acolhedor e especializada em peles sensíveis.' }
     ],
     'Estética Facial': {
@@ -62,7 +62,8 @@ function generateWhatsAppLink(profissional, servico) {
     return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
 }
 
-function renderServiceModalContent(serviceName) {
+// Renderiza o modal - Agora aceita filtro para busca individual
+function renderServiceModalContent(serviceName, filterProfessionalName = null) {
     const serviceModal = document.getElementById('serviceModal');
     const modalTitle = serviceModal.querySelector('.modal-title');
     const modalBody = document.getElementById('serviceModalBody');
@@ -75,12 +76,16 @@ function renderServiceModalContent(serviceName) {
     let html = '<div class="service-details">';
     
     if (professionalData) {
-        html += '<h6 class="text-muted mb-3">Especialistas Disponíveis</h6>';
-        const profs = Array.isArray(professionalData) ? professionalData : [professionalData];
+        html += `<h6 class="text-muted mb-3">${filterProfessionalName ? 'Profissional Selecionada' : 'Especialistas Disponíveis'}</h6>`;
+        let profs = Array.isArray(professionalData) ? professionalData : [professionalData];
+        
+        if (filterProfessionalName) {
+            profs = profs.filter(p => p.nome === filterProfessionalName);
+        }
         
         profs.forEach(prof => {
             html += `
-            <div class="professional-card p-3 mb-3 border rounded">
+            <div class="professional-card p-3 mb-3 border rounded shadow-sm" style="border-left: 4px solid #B59B85;">
                 <div class="row align-items-center">
                     <div class="col-4 col-md-3 text-center">
                         <img src="${prof.foto}" class="rounded-circle img-fluid" style="width: 80px; height: 80px; object-fit: cover; border: 2px solid #B59B85;">
@@ -97,18 +102,27 @@ function renderServiceModalContent(serviceName) {
         });
     }
 
-    html += `<hr><p class="lead">${specification}</p></div>`;
+    if (!filterProfessionalName) {
+        html += `<hr><p class="lead">${specification}</p>`;
+    } else {
+        html += `<div class="text-center mt-3">
+                    <button class="btn btn-outline-secondary btn-sm" onclick="renderServiceModalContent('${serviceName}')">
+                        Ver todas as especialistas de ${serviceName}
+                    </button>
+                 </div>`;
+    }
+    
+    html += `</div>`;
     modalBody.innerHTML = html;
 }
 
-// --- INICIALIZAÇÃO DO DOM ---
+// --- INICIALIZAÇÃO E EVENTOS ---
 
 document.addEventListener('DOMContentLoaded', function () {
     const root = document.documentElement;
     const announcementBar = document.querySelector('.announcement-bar');
     const topBar = document.querySelector('.top-bar');
     const secondaryNav = document.querySelector('.secondary-nav');
-    const fixedTopContainer = document.querySelector('.fixed-top');
 
     // Cálculo de Offset do Header
     function updateHeaderOffset() {
@@ -122,19 +136,19 @@ document.addEventListener('DOMContentLoaded', function () {
     updateHeaderOffset();
     window.addEventListener('resize', updateHeaderOffset);
 
-    // Efeito de Scroll na Navbar
+    // EFEITO: CABEÇALHO APARECE APENAS NO TOPO
     window.addEventListener('scroll', function() {
-    let st = window.pageYOffset || document.documentElement.scrollTop;
-    const fixedTopContainer = document.querySelector('.fixed-top');
-    if (st > 50) {
-        fixedTopContainer.classList.add('navbar-hidden');
-        
-    } else {
-        fixedTopContainer.classList.remove('navbar-hidden');
-    }
-});
+        let st = window.pageYOffset || document.documentElement.scrollTop;
+        const fixedTopContainer = document.querySelector('.fixed-top');
+        // Se descer mais de 50px, esconde. Se voltar ao topo, mostra.
+        if (st > 50) {
+            fixedTopContainer.classList.add('navbar-hidden');
+        } else {
+            fixedTopContainer.classList.remove('navbar-hidden');
+        }
+    });
 
-    // --- LÓGICA DE BUSCA ---
+    // LÓGICA DE BUSCA
     const setupSearch = (inputEl, resultsEl) => {
         inputEl.addEventListener('input', function() {
             const term = this.value.toLowerCase().trim();
@@ -181,7 +195,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
 function handleSearchClick(name, type, service) {
     document.querySelectorAll('.search-results').forEach(el => el.classList.remove('show'));
-    renderServiceModalContent(service);
+    
+    // Filtra se for profissional específico
+    if (type === 'Profissional') {
+        renderServiceModalContent(service, name);
+    } else {
+        renderServiceModalContent(service);
+    }
+    
     const modal = new bootstrap.Modal(document.getElementById('serviceModal'));
     modal.show();
 }
@@ -197,7 +218,7 @@ if (serviceModal) {
     });
 }
 
-// Galeria e AOS
+// Galeria
 const muralGrid = document.querySelector('.mural-grid');
 if (muralGrid) {
     muralGrid.addEventListener('click', function(e) {
