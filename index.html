@@ -25,12 +25,13 @@
             <p>Um novo conceito em beleza e bem-estar. Venha nos visitar!</p>
         </div>
     </div>
+
     <div class="fixed-top">
         <header class="navbar navbar-light top-bar">
             <div class="container">
-                <div class="row align-items-center">
+                <div class="row align-items-center w-100">
                     <div class="col-4 d-flex align-items-center">
-                        <div class="header-social-icons">
+                        <div class="header-social-icons d-none d-lg-flex">
                             <a href="https://wa.me/551150732011" target="_blank" class="social-icon"><i class="fab fa-whatsapp"></i></a>
                             <a href="https://facebook.com/advancedcenter" target="_blank" class="social-icon"><i class="fab fa-facebook"></i></a>
                             <a href="https://instagram.com/advancedcenter" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
@@ -39,38 +40,40 @@
                     <div class="col-4 d-flex justify-content-center align-items-center">
                         <a class="navbar-brand" href="#"><img src="img/logo AD.png" alt="Logo Grazi esthetic"></a>
                     </div>
-                    <div class="col-4 d-flex justify-content-end align-items-center">
-                        <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="#mainNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <div class="col-4 d-flex justify-content-end align-items-center gap-2">
+                        <div class="header-actions d-none d-lg-flex align-items-center">
+                            <a href="https://wa.me/551150732011" class="btn btn-primary btn-sm me-2">Agende</a>
+                            <div class="dropdown header-search">
+                                <a class="nav-link p-0" href="#" id="searchDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-search"></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end p-2" aria-labelledby="searchDropdown">
+                                    <div class="input-group search-bar-container">
+                                        <input type="text" id="searchInput" class="form-control search-input" placeholder="Buscar serviço..." aria-label="Buscar">
+                                        <div id="searchResults" class="search-results"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
                         </button>
                     </div>
                 </div>
             </div>
-            <div class="header-actions d-none d-lg-flex">
-                <a href="https://wa.me/551150732011" class="btn btn-primary btn-sm">Agende</a>
-                <div class="dropdown header-search">
-                    <a class="nav-link p-0" href="#" id="searchDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fas fa-search"></i>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-end p-2" aria-labelledby="searchDropdown">
-                        <div class="input-group search-bar-container">
-                            <input type="text" id="searchInput" class="form-control search-input" placeholder="Buscar serviço..." aria-label="Buscar">
-                            <div id="searchResults" class="search-results"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </header>
+
         <nav class="navbar navbar-expand-lg navbar-light secondary-nav" id="mainNavContainer">
             <div class="container">
                 <div class="collapse navbar-collapse" id="mainNav">
-                    <ul class="navbar-nav mx-auto">
+                    <ul class="navbar-nav mx-auto text-center">
                         <li class="nav-item"><a class="nav-link" href="#servicos">Serviços</a></li>
                         <li class="nav-item"><a class="nav-link" href="#galeria">Galeria</a></li>
                         <li class="nav-item"><a class="nav-link" href="#feedbacks">Avaliações</a></li>
                         <li class="nav-item"><a class="nav-link" href="#sobre">Sobre Nós</a></li>
+                        
                         <li class="nav-item d-lg-none">
-                            <div class="p-2 w-100">
+                            <div class="p-3 w-100">
                                 <div class="input-group search-bar-container w-100">
                                     <input type="text" id="searchInputMobile" class="form-control search-input" placeholder="Buscar serviço..." aria-label="Buscar">
                                     <div id="searchResultsMobile" class="search-results"></div>
@@ -78,6 +81,13 @@
                             </div>
                         </li>
 
+                        <li class="nav-item d-lg-none py-3 border-top">
+                            <div class="d-flex justify-content-center gap-4">
+                                <a href="https://wa.me/551150732011" target="_blank" class="social-icon fs-2" style="color: #25D366;"><i class="fab fa-whatsapp"></i></a>
+                                <a href="https://facebook.com/advancedcenter" target="_blank" class="social-icon fs-2" style="color: #1877F2;"><i class="fab fa-facebook"></i></a>
+                                <a href="https://instagram.com/advancedcenter" target="_blank" class="social-icon fs-2" style="color: #E1306C;"><i class="fab fa-instagram"></i></a>
+                            </div>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -193,9 +203,9 @@
                     <img src="img/galeria/sobran2.jpg" alt="Foto da galeria 6" data-aos="fade-up" data-aos-delay="200">
                     <img src="img/galeria/rosto.jpg" alt="Foto da galeria 7" data-aos="fade-up">
                     <img src="img/galeria/cabe2.jpg" alt="Foto da galeria 8" data-aos-delay="100" data-aos="fade-up">
+                </div>
             </div>
-        </div>
-</section>
+        </section>
 
         <section id="sobre" class="py-5">
             <div class="container">
@@ -205,8 +215,8 @@
                 <p class="text-center lead" data-aos="fade-up" data-aos-delay="200">
                 Com 23 anos de tradição, o nosso salão é mais do que um espaço de estética; é um lugar onde gerações de mulheres se encontram para renovar a autoestima. Fundado pela Graziela, o salão nasceu de um sonho e se consolidou no mercado através da dedicação e do aperfeiçoamento constante. Aqui, cada cliente é única e cada serviço é realizado com a experiência de quem realmente entende do assunto. Unimos a segurança da tradição com as tendências mais modernas do mundo da beleza.
                 </p>
-        </div>
-</section>
+            </div>
+        </section>
 
         <section id="feedbacks" class="py-5 bg-light">
             <div class="container">
@@ -264,13 +274,7 @@
                                 <i class="fas fa-star"></i>
                             </div>
                         </div>
-                        <p class="feedback-text">"super maravilhoso!
-                        Melhor depilação do mundo genteeee!
-                        Recomendo msm, exatamente 18 anos com a msm profissional.
-                        Estabelecimento fiel aos seus clientes.
-                        Sempre nos preservando.
-                        Donos completamente atentos as normas de higiene.
-                        Experimente!"</p>
+                        <p class="feedback-text">"super maravilhoso! Melhor depilação do mundo genteeee! Recomendo msm, exatamente 18 anos com a msm profissional. Estabelecimento fiel aos seus clientes. Sempre nos preservando. Donos completamente atentos as normas de higiene. Experimente!"</p>
                         <p class="feedback-author"><strong>Livia Maria</strong></p>
                     </div>
 
@@ -298,8 +302,7 @@
                                 <i class="fas fa-star"></i>
                             </div>
                         </div>
-                        <p class="feedback-text">"Sou cliente a 19 anos amo passar meu tempo lá.
-                        O Carlos faz um cabelo como ninguém excelente profissional, Graziela sombrancelha perfeita as manicures, esteticistas, Depiladoras nota 11"</p>
+                        <p class="feedback-text">"Sou cliente a 19 anos amo passar meu tempo lá. O Carlos faz um cabelo como ninguém excelente profissional, Graziela sombrancelha perfeita as manicures, esteticistas, Depiladoras nota 11"</p>
                         <p class="feedback-author"><strong>Sonia Michel</strong></p>
                     </div>
                 </div>
@@ -329,10 +332,10 @@
                     <div class="col-md-6">
                         <h5>Localização</h5>
                         <div class="map-container">
-                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3656.0499999999997!2d-46.5659!3d-23.6247!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce53b1d7e8b8b1%3A0x5c0b3b5b5b5b5b5b!2sR.%20Ribeiro%20Lacerda%2C%20471%20-%20Jardim%20da%20Sa%C3%BAde%2C%20S%C3%A3o%20Paulo%20-%20SP%2C%2004150-000!5e0!3m2!1spt-BR!2sbr!4v1234567890" width="100%" height="300" style="border:0; border-radius: 8px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3655.449747372138!2d-46.6200227!3d-23.6231649!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce5b66d4949221%3A0xc3f982115313360b!2sR.%20Ribeiro%20Lacerda%2C%20471%20-%20Jardim%20da%20Sa%C3%BAde%2C%20S%C3%A3o%20Paulo%20-%20SP%2C%2004150-000!5e0!3m2!1spt-BR!2sbr!4v1700000000000" width="100%" height="300" style="border:0; border-radius: 8px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                         </div>
                         <p class="mt-3">
-                            <a href="https://www.google.com/maps/search/R.+Ribeiro+Lacerda,+471+-+Jardim+da+Sa%C3%BAde,+S%C3%A3o+Paulo+-+SP,+04150-000" target="_blank" class="btn btn-primary btn-sm">
+                            <a href="https://maps.google.com/?q=Ribeiro+Lacerda+471" target="_blank" class="btn btn-primary btn-sm">
                                 <i class="fas fa-map-marker-alt"></i> Abrir no Google Maps
                             </a>
                         </p>
@@ -341,8 +344,6 @@
             </div>
         </section>
     </main>
-
-
 
     <div class="modal fade" id="serviceModal" tabindex="-1" aria-labelledby="serviceModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -374,29 +375,12 @@
         </div>
     </div>
 
-    <div class="modal fade" id="professionalModal" tabindex="-1" aria-labelledby="professionalModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="professionalModalLabel">Informações do Profissional</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body" id="professionalModalBody">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                    <a href="https://wa.me/551150732011" class="btn btn-primary" target="_blank">Agendar via WhatsApp</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <footer>
-        <div class="container">
-            <p>&copy; 2026 Grazi Esthetic. Todos os direitos reservados.</p>
+        <div class="container text-center">
+            <p>© 2026 Grazi Esthetic. Todos os direitos reservados.</p>
             <div class="links-rodape">
-                <a href="#">Sobre Nós</a>
-                <a href="#">Contato</a>
+                <a href="#sobre">Sobre Nós</a>
+                <a href="#contato">Contato</a>
                 <a href="#">Termos de Uso</a>
             </div>
         </div>

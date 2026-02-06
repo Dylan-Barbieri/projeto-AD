@@ -62,7 +62,6 @@ function generateWhatsAppLink(profissional, servico) {
     return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
 }
 
-// Renderiza o modal - Agora aceita filtro para busca individual
 function renderServiceModalContent(serviceName, filterProfessionalName = null) {
     const serviceModal = document.getElementById('serviceModal');
     const modalTitle = serviceModal.querySelector('.modal-title');
@@ -123,6 +122,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const announcementBar = document.querySelector('.announcement-bar');
     const topBar = document.querySelector('.top-bar');
     const secondaryNav = document.querySelector('.secondary-nav');
+    const menuCollapse = document.getElementById('navbarResponsive');
 
     // Cálculo de Offset do Header
     function updateHeaderOffset() {
@@ -136,32 +136,43 @@ document.addEventListener('DOMContentLoaded', function () {
     updateHeaderOffset();
     window.addEventListener('resize', updateHeaderOffset);
 
-    // EFEITO: CABEÇALHO APARECE APENAS NO TOPO
+    // EFEITO: CABEÇALHO APARECE APENAS NO TOPO (Com trava para menu aberto)
     window.addEventListener('scroll', function() {
         let st = window.pageYOffset || document.documentElement.scrollTop;
         const fixedTopContainer = document.querySelector('.fixed-top');
-        // Se descer mais de 50px, esconde. Se voltar ao topo, mostra.
-        if (st > 50) {
+        const isMenuOpen = menuCollapse ? menuCollapse.classList.contains('show') : false;
+
+        if (st > 50 && !isMenuOpen) {
             fixedTopContainer.classList.add('navbar-hidden');
         } else {
             fixedTopContainer.classList.remove('navbar-hidden');
         }
     });
 
+    // FECHAR MENU MOBILE AO CLICAR EM LINK
+    const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            if (window.innerWidth < 992) {
+                const bsCollapse = bootstrap.Collapse.getInstance(menuCollapse);
+                if (bsCollapse) bsCollapse.hide();
+            }
+        });
+    });
+
     // LÓGICA DE BUSCA
     const setupSearch = (inputEl, resultsEl) => {
+        if (!inputEl || !resultsEl) return;
         inputEl.addEventListener('input', function() {
             const term = this.value.toLowerCase().trim();
             if (!term) { resultsEl.classList.remove('show'); return; }
 
             let results = [];
-            // Buscar Serviços
             Object.keys(serviceSpecifications).forEach(s => {
                 if (s.toLowerCase().includes(term) || (s === 'Manicure' && 'unha'.includes(term))) {
                     results.push({ name: s, type: 'Serviço' });
                 }
             });
-            // Buscar Profissionais
             Object.keys(professionals).forEach(s => {
                 const pData = professionals[s];
                 const pArray = Array.isArray(pData) ? pData : [pData];
@@ -196,18 +207,17 @@ document.addEventListener('DOMContentLoaded', function () {
 function handleSearchClick(name, type, service) {
     document.querySelectorAll('.search-results').forEach(el => el.classList.remove('show'));
     
-    // Filtra se for profissional específico
     if (type === 'Profissional') {
         renderServiceModalContent(service, name);
     } else {
         renderServiceModalContent(service);
     }
     
-    const modal = new bootstrap.Modal(document.getElementById('serviceModal'));
+    const modalEl = document.getElementById('serviceModal');
+    const modal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
     modal.show();
 }
 
-// Listener para os cards de serviço da página
 const serviceModal = document.getElementById('serviceModal');
 if (serviceModal) {
     serviceModal.addEventListener('show.bs.modal', function (event) {
@@ -218,13 +228,13 @@ if (serviceModal) {
     });
 }
 
-// Galeria
 const muralGrid = document.querySelector('.mural-grid');
 if (muralGrid) {
     muralGrid.addEventListener('click', function(e) {
         if (e.target.tagName === 'IMG') {
             document.getElementById('galleryModalImage').src = e.target.src;
-            new bootstrap.Modal(document.getElementById('galleryModal')).show();
+            const galModal = new bootstrap.Modal(document.getElementById('galleryModal'));
+            galModal.show();
         }
     });
 }
