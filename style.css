@@ -531,7 +531,7 @@ html, body {
 
 .search-bar-container .search-input {
     border: 1px solid #B59B85;
-    border-radius: 20px;
+    border-radius: 0px;
     padding: 0.5rem 1rem;
     font-size: 0.9rem;
     color: #4A443F;
