@@ -303,17 +303,18 @@ section {
     margin-bottom: 2rem;
 }
 
+/* --- AJUSTE FINO DA GALERIA --- */
 .mural-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(4, 1fr); /* 4 colunas no Desktop */
+    gap: 12px;
 }
 
 .mural-grid img {
     width: 100%;
-    height: 100%;
+    height: 220px; 
     object-fit: cover;
-    border-radius: 8px;
+    border-radius: 4px;
     box-shadow: 0 4px 8px rgba(74, 68, 63, 0.1);
     transition: transform 0.3s, box-shadow 0.3s;
     cursor: pointer;
@@ -322,6 +323,25 @@ section {
 .mural-grid img:hover {
     transform: scale(1.05);
     box-shadow: 0 8px 15px rgba(74, 68, 63, 0.2);
+}
+
+@media (max-width: 992px) {
+    .mural-grid {
+        grid-template-columns: repeat(3, 1fr); /* 3 colunas em Tablets */
+    }
+    .mural-grid img {
+        height: 200px;
+    }
+}
+
+@media (max-width: 576px) {
+    .mural-grid {
+        grid-template-columns: repeat(2, 1fr); /* 2 colunas em Celulares */
+        gap: 8px;
+    }
+    .mural-grid img {
+        height: 160px;
+    }
 }
 
 #galleryModal .modal-content {
@@ -376,18 +396,9 @@ section {
 }
 
 @keyframes pulse {
-    0% {
-        transform: scale(0.95);
-        box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
-    }
-    70% {
-        transform: scale(1);
-        box-shadow: 0 0 0 10px rgba(37, 211, 102, 0);
-    }
-    100% {
-        transform: scale(0.95);
-        box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
-    }
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(37, 211, 102, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
 }
 
 .whatsapp-float .notification-badge, .instagram-float .notification-badge {
@@ -413,7 +424,6 @@ section {
     height: 60px;
     bottom: 110px;
     right: 40px;
-    background: #d6249f;
     background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%);
     color: #FFF;
     border-radius: 50px;
@@ -427,25 +437,10 @@ section {
     animation: pulse-instagram 2s infinite;
 }
 
-.instagram-float:hover {
-    color: #FFF;
-    background: #c13584; 
-    animation: none;
-}
-
 @keyframes pulse-instagram {
-    0% {
-        transform: scale(0.95);
-        box-shadow: 0 0 0 0 rgba(214, 36, 159, 0.7);
-    }
-    70% {
-        transform: scale(1);
-        box-shadow: 0 0 0 10px rgba(214, 36, 159, 0);
-    }
-    100% {
-        transform: scale(0.95);
-        box-shadow: 0 0 0 0 rgba(214, 36, 159, 0);
-    }
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(214, 36, 159, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(214, 36, 159, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(214, 36, 159, 0); }
 }
 
 footer {
@@ -467,25 +462,26 @@ footer a {
     margin-left: 1rem;
 }
 
-
-footer a:hover {
-    text-decoration: underline;
-}
+footer a:hover { text-decoration: underline; }
 
 .map-container {
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 4px 8px rgba(74, 68, 63, 0.1);
 }
+
 html, body {
     overflow-x: hidden;
 }
 
+/* --- AJUSTE FINO DOS FEEDBACKS --- */
 .feedbacks-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    /* 3 colunas no Desktop para melhor leitura do texto */
+    grid-template-columns: repeat(3, 1fr); 
     gap: 2rem;
     margin-top: 3rem;
+    align-items: stretch; /* Garante que todos os cards da linha tenham a mesma altura */
 }
 
 .feedback-card {
@@ -495,11 +491,29 @@ html, body {
     box-shadow: 0 4px 8px rgba(74, 68, 63, 0.1);
     transition: transform 0.3s, box-shadow 0.3s;
     border-left: 4px solid #B59B85;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Mantém o autor sempre na base do card */
+    height: 100%;
 }
 
 .feedback-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 15px rgba(74, 68, 63, 0.2);
+}
+
+/* Responsividade dos Feedbacks */
+@media (max-width: 992px) {
+    .feedbacks-grid {
+        grid-template-columns: repeat(2, 1fr); /* 2 colunas em Tablets */
+    }
+}
+
+@media (max-width: 768px) {
+    .feedbacks-grid {
+        grid-template-columns: 1fr; /* 1 coluna em Celulares */
+        gap: 1.5rem;
+    }
 }
 
 .feedback-header {
@@ -683,7 +697,6 @@ html, body {
     font-size: 1.15rem;
 }
 
-/* 1. Garante que o menu hambúrguer seja rolável no celular */
 @media (max-width: 992px) {
     #mainNav {
         max-height: 70vh; 
@@ -694,7 +707,6 @@ html, body {
         border-bottom: 2px solid #E8E1DA;
     }
 
-    /* Cores pretas fixas para ícones sociais no menu mobile */
     #mainNav .social-icon {
         filter: none !important;
         color: #000000 !important;
@@ -718,7 +730,6 @@ html, body {
     }
 }
 
-/* 4. Garante que os ícones no Desktop continuem funcionando perfeitamente */
 .header-social-icons .social-icon {
     display: inline-flex;
     align-items: center;
@@ -726,7 +737,6 @@ html, body {
     text-decoration: none;
 }
 
-/* 5. Ajuste fino no botão de abrir o menu (hambúrguer) */
 .navbar-toggler {
     border: none !important;
     padding-right: 0;
