@@ -444,7 +444,7 @@ section {
 }
 
 footer {
-    background-color: #ffffff;
+    background-color: #D1C4B9;
     color: #000000;
     padding: 2rem 0;
     text-align: center;
@@ -744,4 +744,8 @@ html, body {
 
 .navbar-toggler:focus {
     box-shadow: none !important;
+}
+
+.contato {
+    background-color: #FFF;
 }
