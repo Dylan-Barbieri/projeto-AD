@@ -33,7 +33,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 section {
-    min-height: 80vh;
+    min-height: auto;
     display: flex;
     align-items: center;
 }
@@ -748,4 +748,21 @@ html, body {
 
 .contato {
     background-color: #FFF;
+}
+
+.btn-outline-dark {
+    border: 2px solid #B59B85;
+    color: #000000;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+}
+
+.btn-outline-dark:hover {
+    background-color: #B59B85;
+    border-color: #B59B85;
+    color: #ffffff;
+    transform: translateY(-2px);
 }
