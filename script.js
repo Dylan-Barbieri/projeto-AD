@@ -1,5 +1,6 @@
 const WHATSAPP_NUMBER = "551150732011";
 
+// --- DADOS RESTAURADOS ---
 const serviceSpecifications = {
     'Sobrancelha': 'Serviços especializados de design e tratamento de sobrancelhas com técnicas modernas e profissional experiente.',
     'Cabeleireiro': 'Cortes realizados por profissional especializado. Oferecemos coloração, escova progressiva, botox capilar e muito mais.',
@@ -56,7 +57,6 @@ const professionals = {
 };
 
 // --- FUNÇÕES AUXILIARES ---
-
 function generateWhatsAppLink(profissional, servico) {
     const text = `Olá! Gostaria de agendar um horário de ${servico.toLowerCase()} com a profissional ${profissional}.`;
     return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
@@ -116,47 +116,37 @@ function renderServiceModalContent(serviceName, filterProfessionalName = null) {
 }
 
 // --- INICIALIZAÇÃO E EVENTOS ---
-
 document.addEventListener('DOMContentLoaded', function () {
     const root = document.documentElement;
     const announcementBar = document.querySelector('.announcement-bar');
     const topBar = document.querySelector('.top-bar');
     const secondaryNav = document.querySelector('.secondary-nav');
-    const menuCollapse = document.getElementById('navbarResponsive');
+    const menuCollapse = document.getElementById('mainNav'); // ID Ajustado para o seu HTML
 
     function updateHeaderOffset() {
-        const h1 = announcementBar?.offsetHeight || 0;
-        const h2 = topBar?.offsetHeight || 0;
-        const h3 = secondaryNav?.offsetHeight || 0;
-        const total = h1 + h2 + h3;
+        const total = (announcementBar?.offsetHeight || 0) + (topBar?.offsetHeight || 0) + (secondaryNav?.offsetHeight || 0);
         root.style.setProperty('--header-offset', `${total}px`);
         document.body.style.paddingTop = `${total}px`;
     }
     updateHeaderOffset();
     window.addEventListener('resize', updateHeaderOffset);
 
+    // --- LÓGICA DE SCROLL (SÓ REAPARECE NO TOPO) ---
     window.addEventListener('scroll', function() {
         let st = window.pageYOffset || document.documentElement.scrollTop;
         const fixedTopContainer = document.querySelector('.fixed-top');
         const isMenuOpen = menuCollapse ? menuCollapse.classList.contains('show') : false;
 
-        if (st > 50 && !isMenuOpen) {
-            fixedTopContainer.classList.add('navbar-hidden');
-        } else {
+        if (isMenuOpen) return;
+
+        if (st <= 10) {
             fixedTopContainer.classList.remove('navbar-hidden');
+        } else {
+            fixedTopContainer.classList.add('navbar-hidden');
         }
     });
 
-    const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
-    navLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            if (window.innerWidth < 992) {
-                const bsCollapse = bootstrap.Collapse.getInstance(menuCollapse);
-                if (bsCollapse) bsCollapse.hide();
-            }
-        });
-    });
-
+    // --- BUSCA ---
     const setupSearch = (inputEl, resultsEl) => {
         if (!inputEl || !resultsEl) return;
         inputEl.addEventListener('input', function() {
@@ -200,28 +190,28 @@ document.addEventListener('DOMContentLoaded', function () {
 
 function handleSearchClick(name, type, service) {
     document.querySelectorAll('.search-results').forEach(el => el.classList.remove('show'));
-    
     if (type === 'Profissional') {
         renderServiceModalContent(service, name);
     } else {
         renderServiceModalContent(service);
     }
-    
     const modalEl = document.getElementById('serviceModal');
-    const modal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
+    const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
     modal.show();
 }
 
+// Evento do Modal
 const serviceModal = document.getElementById('serviceModal');
 if (serviceModal) {
     serviceModal.addEventListener('show.bs.modal', function (event) {
         const button = event.relatedTarget;
         if (!button) return; 
-        const serviceName = button.getAttribute('data-service') || button.parentElement.getAttribute('data-service');
+        const serviceName = button.getAttribute('data-service');
         if (serviceName) renderServiceModalContent(serviceName);
     });
 }
 
+// Galeria Zoom
 const muralGrid = document.querySelector('.mural-grid');
 if (muralGrid) {
     muralGrid.addEventListener('click', function(e) {
