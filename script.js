@@ -92,7 +92,7 @@ function renderServiceModalContent(serviceName, filterProfessionalName = null) {
                     <div class="col-8 col-md-9">
                         <h5 class="mb-1">${prof.nome}</h5>
                         <p class="text-muted small mb-2">${prof.descricao}</p>
-                        <a href="${generateWhatsAppLink(prof.nome, serviceName)}" target="_blank" class="btn btn-success btn-sm">
+                        <a href="${generateWhatsAppLink(prof.nome, serviceName)}" target="_blank" rel="noopener noreferrer" class="btn btn-success btn-sm">
                             <i class="fab fa-whatsapp"></i> Agendar com ${prof.nome}
                         </a>
                     </div>
@@ -124,7 +124,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const secondaryNav = document.querySelector('.secondary-nav');
     const menuCollapse = document.getElementById('navbarResponsive');
 
-    // Cálculo de Offset do Header
     function updateHeaderOffset() {
         const h1 = announcementBar?.offsetHeight || 0;
         const h2 = topBar?.offsetHeight || 0;
@@ -136,7 +135,6 @@ document.addEventListener('DOMContentLoaded', function () {
     updateHeaderOffset();
     window.addEventListener('resize', updateHeaderOffset);
 
-    // EFEITO: CABEÇALHO APARECE APENAS NO TOPO (Com trava para menu aberto)
     window.addEventListener('scroll', function() {
         let st = window.pageYOffset || document.documentElement.scrollTop;
         const fixedTopContainer = document.querySelector('.fixed-top');
@@ -149,7 +147,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // FECHAR MENU MOBILE AO CLICAR EM LINK
     const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
     navLinks.forEach(link => {
         link.addEventListener('click', () => {
@@ -160,7 +157,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // LÓGICA DE BUSCA
     const setupSearch = (inputEl, resultsEl) => {
         if (!inputEl || !resultsEl) return;
         inputEl.addEventListener('input', function() {
@@ -201,8 +197,6 @@ document.addEventListener('DOMContentLoaded', function () {
     setupSearch(document.getElementById('searchInput'), document.getElementById('searchResults'));
     setupSearch(document.getElementById('searchInputMobile'), document.getElementById('searchResultsMobile'));
 });
-
-// --- CLIQUES E MODAIS ---
 
 function handleSearchClick(name, type, service) {
     document.querySelectorAll('.search-results').forEach(el => el.classList.remove('show'));

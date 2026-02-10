@@ -686,7 +686,6 @@ html, body {
 /* 1. Garante que o menu hambúrguer seja rolável no celular */
 @media (max-width: 992px) {
     #mainNav {
-        /* Define uma altura máxima baseada na tela para permitir o scroll */
         max-height: 70vh; 
         overflow-y: auto !important; 
         -webkit-overflow-scrolling: touch;
@@ -695,21 +694,24 @@ html, body {
         border-bottom: 2px solid #E8E1DA;
     }
 
-    /* 2. Estilo específico para os ícones sociais DENTRO do menu */
+    /* Cores pretas fixas para ícones sociais no menu mobile */
     #mainNav .social-icon {
         filter: none !important;
+        color: #000000 !important;
         font-size: 2.2rem !important;
         margin: 0 15px;
         display: inline-block;
         transition: transform 0.2s;
     }
 
-    /* Efeito de clique no dedo */
+    #mainNav .social-icon i {
+        color: #000000 !important;
+    }
+
     #mainNav .social-icon:active {
         transform: scale(1.2);
     }
 
-    /* 3. Ajuste da busca no mobile para não sumir no scroll */
     #mainNav .search-bar-container {
         margin-bottom: 20px;
         position: relative;
